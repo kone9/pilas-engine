@@ -32,20 +32,11 @@ Router.map(function() {
   this.route("ejemplos", function() {
     this.route("ver", { path: ":nombre" });
   });
+  this.route("actores");
 
   this.route("app", function() {
-    // abre el proyecto desde electron
     this.route("abrir_proyecto", { path: "abrir_proyecto/:ruta" });
-
-    // abre el proyecto desde el navegador
-    this.route("abrir_proyecto_serializado", { path: "abrir_proyecto_serializado/:hash" });
-
-    this.route('editor', function() {
-      this.route('abandonar-proyecto');
-    });
-    this.route('crear_proyecto');
   });
-  this.route("proyecto", { path: "proyecto/:hash" });
 });
 
 export default Router;

@@ -19,20 +19,23 @@ module.exports = {
     esperar: true,
     pulsar: true,
     autoComplete: true,
-    ScrollBooster: true,
     ga: true,
     hacerClick: true,
-    esperarElemento: true,
-    saveTextAs: true,
-    Sortable: true,
-    Split: true,
-    JSZip: true,
-    saveAs: true
+    esperarElemento: true
   },
   overrides: [
     // node files
     {
-      files: [".eslintrc.js", ".template-lintrc.js", "ember-cli-build.js", "testem.js", "blueprints/*/index.js", "config/**/*.js", "lib/*/index.js", "server/**/*.js"],
+      files: [
+        '.eslintrc.js',
+        '.template-lintrc.js',
+        'ember-cli-build.js',
+        'testem.js',
+        'blueprints/*/index.js',
+        'config/**/*.js',
+        'lib/*/index.js',
+        'server/**/*.js'
+      ],
       parserOptions: {
         sourceType: "script",
         ecmaVersion: 2015

@@ -1,4 +1,5 @@
 import { currentURL, visit, click } from "@ember/test-helpers";
+import $ from "jquery";
 import { module, test } from "qunit";
 import { setupApplicationTest } from "ember-qunit";
 import pulsar from "pilas-engine/tests/helpers/pulsar";
@@ -34,24 +35,10 @@ module("Acceptance | puede ingresar al editor", function(hooks) {
     await esperar(PAUSA);
 
     function cambiar_input(valor) {
-      let elemento = document.querySelector("input#posicion");
-      elemento.value = valor;
-
-      function triggerEvent(el, type) {
-        let e = null;
-        if ("createEvent" in document) {
-          e = document.createEvent("HTMLEvents");
-          e.initEvent(type, false, true);
-          el.dispatchEvent(e);
-        } else {
-          e = document.createEventObject();
-          e.eventType = type;
-          el.fireEvent("on" + e.eventType, e);
-        }
-      }
-
-      triggerEvent(elemento, "input");
-
+      let elemento = "input#posicion";
+      $(elemento)
+        .val(valor)
+        .trigger("input");
       return esperar(0.01);
     }
 
@@ -72,6 +59,8 @@ module("Acceptance | puede ingresar al editor", function(hooks) {
 
     await click(".test-regresar");
 
-    assert.equal(currentURL().replace("?livereload=false", ""), "/", "Pudo regresar a la ruta inicial.");
+    await pulsar("Salir de todas formas");
+
+    assert.equal(currentURL(), "/?livereload=false", "Pudo regresar a la ruta inicial.");
   });
 });

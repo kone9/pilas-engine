@@ -1,16 +1,302 @@
 {
+  "imagenes": [
+    {
+      "nombre": "sin_imagen",
+      "ruta": "imagenes/sin_imagen.png"
+    },
+    {
+      "nombre": "invisible",
+      "ruta": "imagenes/invisible.png"
+    },
+    {
+      "nombre": "fondo_cielo_1",
+      "ruta": "imagenes/fondos/cielo.png"
+    },
+    {
+      "nombre": "plano",
+      "ruta": "imagenes/fondos/plano.png"
+    },
+    {
+      "nombre": "pelota",
+      "ruta": "imagenes/pelota.png"
+    },
+    {
+      "nombre": "pelota_de_voley",
+      "ruta": "imagenes/pelota_de_voley.png"
+    },
+    {
+      "nombre": "logo",
+      "ruta": "imagenes/logo.png"
+    },
+    {
+      "nombre": "caja",
+      "ruta": "imagenes/caja.png"
+    },
+    {
+      "nombre": "aceituna",
+      "ruta": "imagenes/aceituna.png"
+    },
+    {
+      "nombre": "nave",
+      "ruta": "imagenes/nave.png"
+    },
+
+    {
+      "nombre": "nave",
+      "ruta": "imagenes/nave.png"
+    },
+    {
+      "nombre": "conejo",
+      "ruta": "imagenes/conejo.png"
+    },
+    {
+      "nombre": "conejo_muere",
+      "ruta": "imagenes/conejo/muere.png"
+    },
+    {
+      "nombre": "conejo_salta",
+      "ruta": "imagenes/conejo/salta.png"
+    },
+    {
+      "nombre": "conejo_parado1",
+      "ruta": "imagenes/conejo/parado1.png"
+    },
+    {
+      "nombre": "conejo_parado2",
+      "ruta": "imagenes/conejo/parado2.png"
+    },
+    {
+      "nombre": "conejo_camina1",
+      "ruta": "imagenes/conejo/camina1.png"
+    },
+    {
+      "nombre": "conejo_camina2",
+      "ruta": "imagenes/conejo/camina2.png"
+    },
+    {
+      "nombre": "nave_en_reposo",
+      "ruta": "imagenes/nave/nave_reposo.png"
+    },
+    {
+      "nombre": "nave_avanza_1",
+      "ruta": "imagenes/nave/nave_avanza_1.png"
+    },
+    {
+      "nombre": "nave_avanza_2",
+      "ruta": "imagenes/nave/nave_avanza_2.png"
+    },
+    {
+      "nombre": "nave_derecha_1",
+      "ruta": "imagenes/nave/nave_derecha_1.png"
+    },
+    {
+      "nombre": "nave_derecha_2",
+      "ruta": "imagenes/nave/nave_derecha_2.png"
+    },
+    {
+      "nombre": "nave_izquierda_1",
+      "ruta": "imagenes/nave/nave_izquierda_1.png"
+    },
+    {
+      "nombre": "nave_izquierda_2",
+      "ruta": "imagenes/nave/nave_izquierda_2.png"
+    },
+    {
+      "nombre": "suelo",
+      "ruta": "imagenes/suelo.png"
+    },
+    {
+      "nombre": "techo",
+      "ruta": "imagenes/techo.png"
+    },
+    {
+      "nombre": "pared",
+      "ruta": "imagenes/pared.png"
+    },
+    {
+      "nombre": "plataforma",
+      "ruta": "imagenes/plataforma.png"
+    },
+    {
+      "nombre": "moneda",
+      "ruta": "imagenes/moneda.png"
+    },
+    {
+      "nombre": "nube",
+      "ruta": "imagenes/nubes/nube.png"
+    },
+    {
+      "nombre": "gallina_muere",
+      "ruta": "imagenes/gallina/gallina_muere.png"
+    },
+    {
+      "nombre": "gallina_sin_piel",
+      "ruta": "imagenes/gallina/gallina_sin_piel.png"
+    },
+    {
+      "nombre": "gallina_vuela_1",
+      "ruta": "imagenes/gallina/gallina_vuela_1.png"
+    },
+    {
+      "nombre": "gallina_vuela_2",
+      "ruta": "imagenes/gallina/gallina_vuela_2.png"
+    },
+    {
+      "nombre": "gallina_vuela_3",
+      "ruta": "imagenes/gallina/gallina_vuela_3.png"
+    },
+    {
+      "nombre": "fondo_azul",
+      "ruta": "imagenes/fondos/azul.png"
+    },
+    {
+      "nombre": "fondo_cesped_1",
+      "ruta": "imagenes/fondos/cesped_1.png"
+    },
+    {
+      "nombre": "fondo_cesped_2",
+      "ruta": "imagenes/fondos/cesped_2.png"
+    },
+    {
+      "nombre": "fondo_tierra_1",
+      "ruta": "imagenes/fondos/tierra_1.png"
+    },
+    {
+      "nombre": "fondo_madera",
+      "ruta": "imagenes/fondos/madera.png"
+    },
+    {
+      "nombre": "fondo_rojo",
+      "ruta": "imagenes/fondos/rojo.png"
+    },
+    {
+      "nombre": "fondo_verde",
+      "ruta": "imagenes/fondos/verde.png"
+    },
+    {
+      "nombre": "espacio_1",
+      "ruta": "imagenes/fondos/espacio_1.png"
+    },
+    {
+      "nombre": "espacio_2",
+      "ruta": "imagenes/fondos/espacio_2.png"
+    },
+    {
+      "nombre": "nubes",
+      "ruta": "imagenes/fondos/nubes.jpg"
+    },
+    {
+      "nombre": "arbol_1",
+      "ruta": "imagenes/arbol_1.png"
+    },
+    {
+      "nombre": "arbol_2",
+      "ruta": "imagenes/arbol_2.png"
+    },
+    {
+      "nombre": "hierba_2",
+      "ruta": "imagenes/hierba_1.png"
+    },
+    {
+      "nombre": "laser",
+      "ruta": "imagenes/laser.png"
+    },
+    {
+      "nombre": "laser_2",
+      "ruta": "imagenes/laser_2.png"
+    },
+    {
+      "nombre": "laser_3",
+      "ruta": "imagenes/laser_3.png"
+    },
+    {
+      "nombre": "copa",
+      "ruta": "imagenes/copa.png"
+    },
+    {
+      "nombre": "boton_jugar",
+      "ruta": "imagenes/boton_jugar.png"
+    },
+
+    {
+      "nombre": "dado_1",
+      "ruta": "imagenes/dado_1.png"
+    },
+    {
+      "nombre": "dado_2",
+      "ruta": "imagenes/dado_2.png"
+    },
+    {
+      "nombre": "dado_3",
+      "ruta": "imagenes/dado_3.png"
+    },
+    {
+      "nombre": "dado_4",
+      "ruta": "imagenes/dado_4.png"
+    },
+    {
+      "nombre": "dado_5",
+      "ruta": "imagenes/dado_5.png"
+    },
+    {
+      "nombre": "dado_6",
+      "ruta": "imagenes/dado_6.png"
+    },
+    {
+      "nombre": "carta",
+      "ruta": "imagenes/carta.png"
+    },
+
+    {
+      "nombre": "carta_azul",
+      "ruta": "imagenes/carta_azul.png"
+    },
+    {
+      "nombre": "carta_verde",
+      "ruta": "imagenes/carta_verde.png"
+    },
+    {
+      "nombre": "gris",
+      "ruta": "imagenes/redimensionables/gris.png"
+    },
+    {
+      "nombre": "dialogo",
+      "ruta": "imagenes/redimensionables/dialogo.png"
+    }
+  ],
+
+  "fuentes": [
+    {
+      "nombre": "font",
+      "imagen": "fuentes/font.png",
+      "fuente": "fuentes/font.fnt"
+    },
+    {
+      "nombre": "verdana3",
+      "imagen": "fuentes/verdana3.png",
+      "fuente": "fuentes/verdana3.fnt"
+    },
+    {
+      "nombre": "azul",
+      "imagen": "fuentes/azul.png",
+      "fuente": "fuentes/azul.fnt"
+    },
+    {
+      "nombre": "impact",
+      "imagen": "fuentes/impact.png",
+      "fuente": "fuentes/impact.fnt"
+    },
+    {
+      "nombre": "mini-impact",
+      "imagen": "fuentes/mini-impact.png",
+      "fuente": "fuentes/mini-impact.fnt"
+    }
+  ],
+
   "sonidos": [
     {
       "nombre": "laser",
       "ruta": "sonidos/laser.wav"
-    },
-    {
-      "nombre": "explosion",
-      "ruta": "sonidos/explosion.wav"
-    },
-    {
-      "nombre": "gallina",
-      "ruta": "sonidos/gallina.wav"
     },
     {
       "nombre": "moneda",

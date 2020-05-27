@@ -12,8 +12,8 @@ export default Component.extend({
   didInsertElement() {
     this.recursos.iniciar();
 
-    this.bus.on("ejemplo:finaliza_carga", this, "finaliza_carga");
-    this.bus.on("ejemplo:cuando_termina_de_iniciar_ejecucion", this, "cuando_termina_de_iniciar_ejecucion");
+    this.bus.on("finaliza_carga", this, "finaliza_carga");
+    this.bus.on("cuando_termina_de_iniciar_ejecucion", this, "cuando_termina_de_iniciar_ejecucion");
 
     if (this.debe_mantener_foco) {
       this.tarea_para_mantener_foco.perform();
@@ -28,7 +28,7 @@ export default Component.extend({
   }),
 
   hacer_foco_en_pilas() {
-    this.bus.trigger("ejemplo:hacer_foco_en_pilas", {});
+    this.bus.trigger("hacer_foco_en_pilas", {});
   },
 
   didReceiveAttrs() {
@@ -38,8 +38,8 @@ export default Component.extend({
   },
 
   willDestroyElement() {
-    this.bus.off("ejemplo:finaliza_carga", this, "finaliza_carga");
-    this.bus.off("ejemplo:cuando_termina_de_iniciar_ejecucion", this, "cuando_termina_de_iniciar_ejecucion");
+    this.bus.off("finaliza_carga", this, "finaliza_carga");
+    this.bus.off("cuando_termina_de_iniciar_ejecucion", this, "cuando_termina_de_iniciar_ejecucion");
   },
 
   finaliza_carga() {
@@ -52,12 +52,12 @@ export default Component.extend({
     let resultado = this.compilador.compilar_proyecto(proyecto);
 
     let datos = {
-      nombre_de_la_escena_inicial: proyecto.escenas[0].nombre,
+      nombre_de_la_escena_inicial: "principal",
       codigo: resultado.codigo,
       proyecto: proyecto
     };
 
-    this.bus.trigger("ejemplo:ejecutar_proyecto", datos);
+    this.bus.trigger("ejecutar_proyecto", datos);
   },
 
   cuando_termina_de_iniciar_ejecucion(pilas) {

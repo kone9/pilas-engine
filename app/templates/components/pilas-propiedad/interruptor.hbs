@@ -1,18 +1,14 @@
-<div class="pv1 flex">
+<div class="truncate h2">
 
-  <div class="w-50">
+  <div class="dib w4">
 
-    <div class="texto truncate">
-      {{#if propiedad.nombreCorto}}
-        {{etiqueta propiedad.nombreCorto}}
-      {{else}}
-        {{etiqueta propiedad.propiedad}}
-      {{/if}}
+    <div class="dib texto">
+      {{etiqueta propiedad.propiedad}}
     </div>
 
   </div>
 
-  <div class="w-50 pb1">
+  <div class="dib w104 v-top">
     {{pilas-interruptor variable=(get objeto propiedad.propiedad) padding="pa0" cuandoCambia=(action "cuando_cambia")}}
   </div>
 

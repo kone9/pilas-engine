@@ -1,11 +1,10 @@
-//import { later } from "@ember/runloop";
+import { later } from '@ember/runloop';
 import Service from "@ember/service";
 
 export default Service.extend({
   iniciar() {},
 
-  notificar_transicion(/*ruta*/) {
-    /*
+  notificar_transicion(ruta) {
     if (ga) {
       later(() => {
         let params = {
@@ -16,6 +15,5 @@ export default Service.extend({
         ga("send", "pageview", params);
       });
     }
-    */
   }
 });

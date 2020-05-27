@@ -13,18 +13,12 @@ module("Integration | Component | pilas modal", function(hooks) {
       this.set("visible", false);
     });
 
-    await render(hbs`
-      <div id="modal"></div>
-      {{pilas-modal visible=visible  itulo="Demo" alCerrar=cerrar}}
-    `);
+    await render(hbs`{{pilas-modal visible=visible  itulo="Demo" alCerrar=cerrar}}`);
     assert.dom("*").hasText("");
 
     this.set("visible", true);
 
-    await render(hbs`
-      <div id="modal"></div>
-      {{pilas-modal visible=visible titulo="Demo" alCerrar=cerrar}}
-    `);
+    await render(hbs`{{pilas-modal visible=visible titulo="Demo" alCerrar=cerrar}}`);
     assert.dom("#titulo").hasText("Demo");
 
     await click("#cerrar");

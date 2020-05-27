@@ -18,5 +18,7 @@ module("Integration | Component | pilas-inspector/escena", function(hooks) {
     }}`);
 
     assert.ok(this.element.textContent.includes("prueba"));
+    assert.ok(this.element.textContent.includes("100"));
+    assert.ok(this.element.textContent.includes("200"));
   });
 });

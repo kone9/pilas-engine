@@ -10,6 +10,4 @@ class Habilidad {
   iniciar() {}
 
   actualizar() {}
-
-  eliminar() {}
 }

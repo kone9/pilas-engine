@@ -1,25 +1,16 @@
 import Controller from "@ember/controller";
-import { inject as service } from "@ember/service";
 
 export default Controller.extend({
-  seccion: "index",
-  queryParams: ["seccion"],
-  electron: service(),
+  url: "./manual/index.html",
+  queryParams: ["url"],
 
   actions: {
     cuandoCambiaURL(url) {
-      this.set("seccion", url);
+      this.set("url", url);
     },
 
     abrirEnUnaVentanaNueva() {
-      if (this.electron.enElectron) {
-        let base = window.location.href.split("index.html")[0];
-        window.open(`${base}/manual/index.html`);
-      } else {
-        let protocolo = window.location.protocol;
-        let host = window.location.host;
-        window.open(`${protocolo}//${host}/manual/${this.seccion}.html`);
-      }
+      window.open(this.url);
     }
   }
 });

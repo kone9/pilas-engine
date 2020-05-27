@@ -1,6 +1,6 @@
 class logo extends Actor {
   propiedades = {
-    imagen: "imagenes:basicos/logo"
+    imagen: "logo"
   };
 
   iniciar() {}

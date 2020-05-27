@@ -1,14 +1,8 @@
-import animaciones_iniciales from "./animaciones-iniciales";
-
 export default {
   titulo: "Proyecto demo",
   ancho: 500,
   alto: 500,
-  tamaño: "500x500",
-  nombre_de_la_escena_inicial: "escena1",
-  imagenes: [],
-  animaciones: animaciones_iniciales,
-
+  escena_inicial: 1,
   codigos: {
     escenas: [
       {
@@ -22,24 +16,28 @@ export default {
     ],
     actores: [
       {
+        nombre: "conejo",
+        codigo: `class conejo extends Actor {\n    propiedades = {\n        x: 0,\n        y: 0,\n        imagen: "conejo_parado1",\n\n        figura: "rectangulo",\n        figura_ancho: 50,\n        figura_alto: 100,\n        figura_radio: 50,\n        figura_sin_rotacion: true,\n        figura_dinamica: true,\n        figura_rebote: 0\n    };\n\n    toca_el_suelo = false;\n    pies = null;\n\n    iniciar() {\n        this.crear_animacion("conejo_parado", ["conejo_parado1", "conejo_parado2"], 2);\n        this.crear_animacion("conejo_camina", ["conejo_camina1", "conejo_camina2"], 20);\n        this.crear_animacion("conejo_salta", ["conejo_salta"], 20);\n        this.crear_animacion("conejo_muere", ["conejo_muere"], 1);\n\n        this.estado = "parado";\n        this.pies = this.agregar_sensor(50, 10, 0, -50);\n    }\n\n    actualizar() {\n        if (this.pies.colisiones.length > 0) {\n            this.toca_el_suelo = true;\n        } else {\n            this.toca_el_suelo = false;\n        }\n    }\n\n    parado_iniciar() {\n        this.reproducir_animacion("conejo_parado");\n    }\n\n    parado_actualizar() {\n        if (this.pilas.control.izquierda || this.pilas.control.derecha) {\n            this.estado = "camina";\n        }\n\n        if (this.pilas.control.arriba && this.toca_el_suelo) {\n            this.impulsar(0, 10);\n            this.estado = "salta";\n        }\n\n        if (!this.toca_el_suelo) {\n            this.estado = "salta";\n        }\n    }\n\n    camina_iniciar() {\n        this.reproducir_animacion("conejo_camina");\n    }\n\n    camina_actualizar() {\n        if (this.pilas.control.izquierda) {\n            this.x -= 5;\n            this.espejado = true;\n        }\n\n        if (this.pilas.control.derecha) {\n            this.x += 5;\n            this.espejado = false;\n        }\n\n        if (!this.pilas.control.derecha && !this.pilas.control.izquierda) {\n            this.estado = "parado";\n            return;\n        }\n\n        if (this.pilas.control.arriba && this.toca_el_suelo) {\n            this.impulsar(0, 10);\n            this.estado = "salta";\n        }\n\n        if (!this.toca_el_suelo) {\n            this.estado = "salta";\n        }\n    }\n\n    salta_iniciar() {\n        this.reproducir_animacion("conejo_salta");\n    }\n\n    salta_actualizar() {\n        if (this.pilas.control.izquierda) {\n            this.x -= 5;\n        }\n\n        if (this.pilas.control.derecha) {\n            this.x += 5;\n        }\n\n        if (this.toca_el_suelo) {\n            this.estado = "parado";\n        }\n    }\n\n    cuando_comienza_una_colision(actor) {\n        if (actor.etiqueta === "moneda") {\n            this.pilas.reproducir_sonido("moneda");\n            actor.eliminar();\n        }\n    }\n\n    cuando_se_mantiene_una_colision(actor) {}\n\n    cuando_termina_una_colision(actor) {}\n}`
+      },
+      {
         nombre: "plataforma",
-        codigo: "// @ts-ignore\nclass plataforma extends Actor {\n    iniciar() {}\n}"
+        codigo: 'class plataforma extends Actor {\n    propiedades = {\n        figura: "rectangulo",\n        imagen: "plataforma",\n        y: 0,\n        figura_ancho: 250,\n        figura_alto: 40,\n        figura_dinamica: false,\n        figura_rebote: 0\n    };\n\n    iniciar() {}\n}'
       },
       {
         nombre: "caja",
-        codigo: "// @ts-ignore\nclass caja extends Actor {\n    iniciar() {}\n}"
+        codigo: 'class caja extends Actor {\n    propiedades = {\n        x: 0,\n        y: 0,\n        imagen: "caja",\n        etiqueta: "caja",\n        figura: "rectangulo",\n        figura_ancho: 45,\n        figura_alto: 45,\n        figura_rebote: 0.9\n    };\n\n    iniciar() {}\n}'
       },
       {
         nombre: "pelota",
-        codigo: "// @ts-ignore\nclass pelota extends Actor {\n    iniciar() {}\n}"
+        codigo: 'class pelota extends Actor {\n    propiedades = {\n        imagen: "pelota",\n        figura: "circulo",\n        figura_radio: 25\n    };\n\n    iniciar() {}\n}'
       },
       {
         nombre: "techo",
-        codigo: "// @ts-ignore\nclass techo extends Actor {\n    iniciar() {}\n}"
+        codigo: 'class techo extends Actor {\n    propiedades = {\n        figura: "rectangulo",\n        imagen: "techo",\n        y: +255,\n        figura_ancho: 600,\n        figura_alto: 25,\n        figura_dinamica: false\n    };\n\n    iniciar() {}\n}'
       },
       {
         nombre: "suelo",
-        codigo: "// @ts-ignore\nclass suelo extends Actor {\n    iniciar() {}\n}"
+        codigo: 'class suelo extends Actor {\n    propiedades = {\n        figura: "rectangulo",\n        imagen: "suelo",\n        y: -250,\n        figura_ancho: 600,\n        figura_alto: 25,\n        figura_dinamica: false\n    };\n\n    iniciar() {}\n}'
       }
     ]
   },
@@ -47,21 +45,39 @@ export default {
     {
       nombre: "escena1",
       id: 1,
-      ancho: 1000,
-      alto: 1000,
       camara_x: 0,
       camara_y: 0,
-      gravedad_x: 0,
-      gravedad_y: 1,
-      fondo: "decoracion:fondos/fondo-plano",
+      fondo: "fondo_cielo_1",
       actores: [
         {
-          activo: true,
+          x: 0,
+          y: 0,
+          z: 0,
+          imagen: "conejo",
+          centro_x: 0.5,
+          centro_y: 0.5,
+          rotacion: 0,
+          escala_x: 1,
+          escala_y: 1,
+          transparencia: 0,
+          etiqueta: "actor",
+          espejado: false,
+          espejado_vertical: false,
+          figura: "rectangulo",
+          figura_dinamica: true,
+          figura_ancho: 50,
+          figura_alto: 100,
+          figura_radio: 50,
+          figura_sin_rotacion: true,
+          figura_rebote: 0,
+          figura_sensor: false,
+          id: 1143,
+          nombre: "conejo"
+        },
+        {
           x: 0,
           y: -90,
-          z: 0,
-          habilidades: [],
-          imagen: "imagenes:plataformas/plataforma",
+          imagen: "plataforma",
           centro_x: 0.5,
           centro_y: 0.5,
           rotacion: 0,
@@ -83,12 +99,9 @@ export default {
           nombre: "plataforma"
         },
         {
-          activo: true,
           x: 96,
           y: 39,
-          z: 0,
-          habilidades: [],
-          imagen: "imagenes:objetos/caja",
+          imagen: "caja",
           centro_x: 0.5,
           centro_y: 0.5,
           rotacion: 0,
@@ -110,12 +123,9 @@ export default {
           nombre: "caja"
         },
         {
-          activo: true,
           x: -61,
           y: 57,
-          z: 0,
-          habilidades: [],
-          imagen: "imagenes:objetos/pelota",
+          imagen: "pelota",
           centro_x: 0.5,
           centro_y: 0.5,
           rotacion: 0,
@@ -137,12 +147,9 @@ export default {
           nombre: "pelota"
         },
         {
-          activo: true,
           x: 0,
           y: 255,
-          z: 0,
-          habilidades: [],
-          imagen: "imagenes:plataformas/techo",
+          imagen: "techo",
           centro_x: 0.5,
           centro_y: 0.5,
           rotacion: 0,
@@ -164,12 +171,9 @@ export default {
           nombre: "techo"
         },
         {
-          activo: true,
           x: 0,
           y: -250,
-          z: 0,
-          habilidades: [],
-          imagen: "imagenes:plataformas/suelo",
+          imagen: "suelo",
           centro_x: 0.5,
           centro_y: 0.5,
           rotacion: 0,
@@ -185,7 +189,7 @@ export default {
           figura_alto: 25,
           figura_radio: 40,
           figura_sin_rotacion: false,
-          figura_rebote: 0,
+          figura_rebote: 1,
           figura_sensor: false,
           id: 1019,
           nombre: "suelo"
@@ -195,13 +199,9 @@ export default {
     {
       nombre: "escena2",
       id: 2,
-      ancho: 1000,
-      alto: 1000,
       camara_x: 0,
       camara_y: 0,
-      gravedad_x: 0,
-      gravedad_y: 1,
-      fondo: "decoracion:fondos/fondo-plano",
+      fondo: "plano",
       actores: []
     }
   ]

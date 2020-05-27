@@ -1,7 +1,7 @@
+import jQuery from "jquery";
 import { hash, Promise as EmberPromise } from "rsvp";
 import Service from "@ember/service";
 import config from "pilas-engine/config/environment";
-import { Promise } from "rsvp";
 
 export default Service.extend({
   data: "",
@@ -33,20 +33,7 @@ export default Service.extend({
   },
 
   _obtener_archivo(nombre) {
-    return new Promise(function(resolve, reject) {
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", `${config.rootURL}${nombre}`);
-
-      xhr.onload = function() {
-        if (xhr.status === 200) {
-          resolve(xhr.responseText);
-        } else {
-          reject(xhr.status);
-        }
-      };
-
-      xhr.send();
-    });
+    return jQuery.get(`${config.rootURL}${nombre}`);
   },
 
   obtener() {

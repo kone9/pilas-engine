@@ -5,6 +5,11 @@ export default Route.extend({
   ejemplos: service(),
 
   model(params) {
-    return this.ejemplos.obtener_por_nombre(params.nombre);
+    return this.ejemplos.obtener().then(data => {
+      return {
+        nombre: params.nombre,
+        ejemplo: data.ejemplos.findBy("nombre", params.nombre)
+      };
+    });
   }
 });

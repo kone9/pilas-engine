@@ -1,6 +1,6 @@
 {
   "name": "pilas-engine",
-  "version": "2.2.1",
+  "version": "2.0.71",
   "private": true,
   "description": "Small description for pilas-engine goes here",
   "repository": "",
@@ -17,17 +17,11 @@
     "start": "ember serve",
     "test": "ember test",
     "compilar_pilas": "tsc -p pilas-engine --pretty -d",
-    "compilar_pilas_live": "tsc -p pilas-engine --watch --pretty -d",
-    "actualizar_actores": "node scripts/actualizar-actores.js",
-    "actualizar_actores_live": "node scripts/actualizar-actores-live.js"
-  },
-  "prettier": {
-    "tabWidth": 2,
-    "singleQuote": false,
-    "printWidth": 300
+    "compilar_pilas_live": "tsc -p pilas-engine --watch --pretty -d"
   },
   "main": "electron.js",
   "devDependencies": {
+    "@ember/jquery": "^0.6.0",
     "@ember/optional-features": "^0.7.0",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-preset-env": "^1.7.0",
@@ -35,10 +29,10 @@
     "broccoli-asset-rev": "^2.7.0",
     "broccoli-funnel": "^2.0.2",
     "devtron": "^1.4.0",
-    "electron": "5.0.1",
-    "electron-packager": "^13.1.1",
+    "electron": "1.6.16",
+    "electron-packager": "^10.1.0",
+    "electron-rebuild": "^1.8.4",
     "ember-ajax": "^5.0.0",
-    "ember-basic-dropdown": "^3.0.1",
     "ember-cli": "~3.8.2",
     "ember-cli-app-version": "^3.2.0",
     "ember-cli-babel": "^7.1.2",
@@ -48,7 +42,6 @@
     "ember-cli-htmlbars-inline-precompile": "^1.0.3",
     "ember-cli-inject-live-reload": "^1.8.2",
     "ember-cli-release": "^1.0.0-beta.2",
-    "ember-cli-sass": "^10.0.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-tachyons-shim": "^4.9.0",
     "ember-cli-template-lint": "^1.0.0-beta.1",
@@ -57,35 +50,33 @@
     "ember-concurrency": "^0.9.0",
     "ember-data": "~3.8.0",
     "ember-export-application-global": "^2.0.0",
+    "ember-intl": "^3.5.2",
     "ember-key-manager": "^0.3.5",
     "ember-keyboard": "^3.0.2",
     "ember-load-initializers": "^1.1.0",
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-parachute": "^1.0.2",
-    "ember-power-select": "^2.3.1",
     "ember-qunit": "^3.4.1",
     "ember-resolver": "^5.0.1",
     "ember-source": "~3.9.1",
     "ember-truth-helpers": "^2.1.0",
-    "ember-wormhole": "^0.5.5",
     "eslint-plugin-ember": "^5.2.0",
+    "gitbook-cli": "^2.3.0",
+    "johnny-five": "0.11.6",
     "loader.js": "^4.7.0",
     "prettier": "^1.16.4",
     "qunit-dom": "^0.8.0",
-    "sass": "^1.20.1",
     "spritesheet-js": "^1.2.6",
+    "surge": "^0.20.3",
     "tachyons": "^4.11.1",
     "typedoc": "0.11.1"
   },
   "engines": {
-    "node": "12.*"
+    "node": "6.* || 8.* || >= 10.*"
   },
   "dependencies": {
     "js-beautify": "^1.9.1",
-    "phaser": "3.21.0",
-    "polka": "^0.5.2",
-    "sharp": "^0.22.1",
-    "sirv": "^0.4.2",
+    "phaser": "3.16.2",
     "typescript": "3.4.3"
   }
 }

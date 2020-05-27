@@ -4,67 +4,33 @@
   Cargando ...
 {{else}}
 
-  <div class="tl mb2">
-    {{pilas-input-filtro filtro=filtro}}
-  </div>
+  {{#each recursos.tarea.lastSuccessful.value.imagenes as |imagen|}}
 
-  {{#if (not proyecto.canvas_disponible)}}
-    {{pilas-esperar}}
-  {{/if}}
+    <div role="button" test-celda-imagen class="w4 dib
+        ba pa2 button
+        br2
+        verdana f6 link pointer
+        black bg-animate b--black-20
+        unselectable
+        v-top
+        mb1
+        hover-bg-black-10
+    " {{action cuando_selecciona imagen}}>
+      <div class="flex flex-column h-100 w-100">
 
-  <div class="texto pv2">
-    Imágenes personalizadas:
-  </div>
+        {{yield}}
 
-  <div>
-    {{ui/importar-imagen cuando_procesa_archivos=(action "incorporar_imagenes_al_proyecto")}}
+        <div class="flex1 tc w-100 h3">
+          <img class="mw-100 mh-100" src="{{rootURL}}{{imagen.ruta}}" alt="">
+        </div>
 
-    <div class="pt2">
-      {{#each proyecto.proyecto.imagenes as |imagen|}}
+        <div class="f6 tc mt2 h1 truncate">
+          {{imagen.nombre}}
+        </div>
 
-        {{pilas-celda-de-imagen
-            imagen=imagen
-            filtro=filtro
-            cuando_selecciona=cuando_selecciona}}
-
-      {{/each}}
+      </div>
     </div>
-  </div>
 
-  <div class="texto pv2">
-    Imágenes incluídas en pilas:
-  </div>
-
-
-  <div class="">
-
-    {{#if cargando}}
-      <div class="dib bg-skeleton w3 h3 mt1 v-top"></div>
-      <div class="dib bg-skeleton w3 h3 mt1 v-top"></div>
-      <div class="dib bg-skeleton w3 h3 mt1 v-top"></div>
-      <div class="dib bg-skeleton w3 h3 mt1 v-top"></div>
-      <div class="dib bg-skeleton w3 h3 mt1 v-top"></div>
-      <div class="dib bg-skeleton w3 h3 mt1 v-top"></div>
-      <div class="dib bg-skeleton w3 h3 mt1 v-top"></div>
-      <div class="dib bg-skeleton w3 h3 mt1 v-top"></div>
-      <div class="dib bg-skeleton w3 h3 mt1 v-top"></div>
-      <div class="dib bg-skeleton w3 h3 mt1 v-top"></div>
-      <div class="dib bg-skeleton w3 h3 mt1 v-top"></div>
-      <div class="dib bg-skeleton w3 h3 mt1 v-top o-90"></div>
-      <div class="dib bg-skeleton w3 h3 mt1 v-top o-70"></div>
-      <div class="dib bg-skeleton w3 h3 mt1 v-top o-50"></div>
-      <div class="dib bg-skeleton w3 h3 mt1 v-top o-30"></div>
-      <div class="dib bg-skeleton w3 h3 mt1 v-top o-10"></div>
-    {{else}}
-      {{#each recursos.tarea.lastSuccessful.value.imagenesParaGrilla as |imagen|}}
-
-        {{pilas-celda-de-imagen
-            imagen=imagen
-            filtro=filtro
-            cuando_selecciona=cuando_selecciona}}
-
-      {{/each}}
-    {{/if}}
-  </div>
+  {{/each}}
 
 {{/if}}

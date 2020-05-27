@@ -1,6 +1,6 @@
 class laser extends Actor {
   propiedades = {
-    imagen: "imagenes:disparos/laser"
+    imagen: "laser"
   };
 
   velocidad;
@@ -13,16 +13,9 @@ class laser extends Actor {
 
   actualizar() {
     this.avanzar(this.rotacion, this.velocidad);
-    this.eliminar_si_sale_de_la_pantalla();
-  }
 
-  eliminar_si_sale_de_la_pantalla() {
-    let izquierda = this.pilas.camara.borde_izquierdo;
-    let derecha = this.pilas.camara.borde_derecho;
-    let arriba = this.pilas.camara.borde_arriba;
-    let abajo = this.pilas.camara.borde_abajo;
-
-    if (this.x > derecha || this.x < izquierda || this.y > arriba || this.y < abajo) {
+    // TODO: reemplazar por un chequeo tipo fuera_de_pantalla = true
+    if (this.x > 400 || this.x < -400 || this.y > 400 || this.y < -400) {
       this.eliminar();
     }
   }

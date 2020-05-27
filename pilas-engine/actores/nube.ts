@@ -1,6 +1,6 @@
 class nube extends Actor {
   propiedades = {
-    imagen: "decoracion:objetos/nube"
+    imagen: "nube"
   };
 
   iniciar() {}

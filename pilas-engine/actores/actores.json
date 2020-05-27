@@ -1,0 +1,49 @@
+{
+  "actores": [
+    {
+      "nombre": "aceituna"
+    },
+    {
+      "nombre": "caja"
+    },
+    {
+      "nombre": "logo"
+    },
+    {
+      "nombre": "pelota"
+    },
+    {
+      "nombre": "nave"
+    },
+    {
+      "nombre": "conejo"
+    },
+    {
+      "nombre": "plataforma"
+    },
+    {
+      "nombre": "moneda"
+    },
+    {
+      "nombre": "suelo"
+    },
+    {
+      "nombre": "techo"
+    },
+    {
+      "nombre": "nube"
+    },
+    {
+      "nombre": "gallina"
+    },
+    {
+      "nombre": "actor"
+    },
+    {
+      "nombre": "texto"
+    },
+    {
+      "nombre": "laser"
+    }
+  ]
+}

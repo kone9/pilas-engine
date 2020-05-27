@@ -1,33 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>PilasEngine</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?pilas-engine" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?pilas-engine">
 
     {{content-for "head"}}
 
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css" />
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/pilas-engine.css" />
-    <link integrity="" rel="stylesheet" href="{{rootURL}}iconos.css" />
-    <link integrity="" rel="stylesheet" href="{{rootURL}}ejemplos.css" />
-    <link integrity="" rel="stylesheet" href="{{rootURL}}grilla-imagenes.css" />
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css">
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/pilas-engine.css">
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/spritesheet.css">
 
-    <script>
-      window.enElectron = window && window.process && window.process.type;
+<script>
+window.enElectron = window && window.process && window.process.type;
 
-      var win = window;
-      win.moduleNode = win.module;
-      win.processNode = win.process;
-      win.requireNode = win.require;
+var win = window;
+win.moduleNode = win.module;
+win.processNode = win.process;
+win.requireNode = win.require;
 
-      delete win.module;
-      delete win.process;
-      delete win.require;
-    </script>
+delete win.module;
+delete win.process;
+delete win.require;
+</script>
+
 
     {{content-for "head-footer"}}
   </head>
@@ -40,9 +39,26 @@
 
     {{content-for "body-footer"}}
 
-    <script>
-      win.process = win.processNode;
-      win.module = win.moduleNode;
-    </script>
+<script>
+win.process = win.processNode;
+win.module = win.moduleNode;
+</script>
+
+
+
+<!-- Google Analytics -->
+<script>
+window.ga =
+  window.ga ||
+  function() {
+    (ga.q = ga.q || []).push(arguments);
+  };
+ga.l = +new Date();
+ga("create", "UA-5829629-15", "auto");
+ga("send", "pageview");
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
   </body>
 </html>

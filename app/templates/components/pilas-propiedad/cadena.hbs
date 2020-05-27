@@ -1,17 +1,15 @@
-<div class="flex">
+<div class="h2">
 
-  <div class="w-50">
-    <div class="texto pv1 lh-title">
+  <div class="dib w4">
+
+    <div class="dib texto">
       {{etiqueta propiedad.propiedad}}
     </div>
+
   </div>
 
-  <div class="w-50">
-    <input class="input w-input-inspector v-top pa1 br2"
-      value={{get objeto propiedad.propiedad}}
-      oninput={{action "al_cambiar" value="target.value"}}
-      onblur={{action "cuando_pierde_foco"}}
-      onkeyup={{action "cuando_suelta_tecla"}}>
+  <div class="dib w3 v-top">
+    <input class="w104" value={{get objeto propiedad.propiedad}} oninput={{action "al_cambiar" value="target.value"}}>
   </div>
 
 </div>

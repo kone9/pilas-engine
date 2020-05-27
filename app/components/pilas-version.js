@@ -2,11 +2,10 @@ import { computed } from "@ember/object";
 import Component from "@ember/component";
 import config from "../config/environment";
 import { task, timeout } from "ember-concurrency";
-import { Promise } from "rsvp";
+import jQuery from "jquery";
 
 const {
-  APP: { version },
-  environment
+  APP: { version }
 } = config;
 
 export default Component.extend({
@@ -20,10 +19,6 @@ export default Component.extend({
     return this.version.replace("v", "").split("+")[0];
   }),
 
-  enDesarrollo: computed("version", function() {
-    return /app-dev/.test(window.location.href);
-  }),
-
   didInsertElement() {
     this.consultar_ultima_version_publicada.perform();
   },
@@ -34,14 +29,8 @@ export default Component.extend({
 
     yield timeout(1000);
 
-    if (environment === "test") {
-      this.set("error", "Omitiendo consultar versión en los tests.");
-      this.set("consultando", false);
-      return;
-    }
-
     try {
-      let data = yield this.obtener_datos_desde_github(url);
+      let data = yield jQuery.ajax({ url: url });
       this.set("version_en_el_servidor", data.tag_name);
       this.set("actualizada", "v" + this.version >= data.tag_name);
     } catch (e) {
@@ -49,24 +38,5 @@ export default Component.extend({
     } finally {
       this.set("consultando", false);
     }
-  }),
-
-  obtener_datos_desde_github(url) {
-    return new Promise(function(resolve, reject) {
-      var xhr = new XMLHttpRequest();
-
-      xhr.open("GET", url);
-      xhr.setRequestHeader("Content-Type", "application/json");
-
-      xhr.onload = function() {
-        if (xhr.status === 200) {
-          resolve(JSON.parse(xhr.responseText));
-        } else {
-          reject(xhr.status);
-        }
-      };
-
-      xhr.send();
-    });
-  }
+  })
 });

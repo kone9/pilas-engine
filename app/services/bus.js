@@ -9,6 +9,7 @@ import Service from "@ember/service";
  *
  * - actualizar_actor_desde_el_editor
  * - actualizar_escena_desde_el_editor
+ * - actualizar_proyecto_desde_el_editor
  * - cambiar_posicion_desde_el_editor
  * - cargar_escena
  * - comienza_a_mover_un_actor
@@ -18,7 +19,7 @@ import Service from "@ember/service";
  * - eliminar_actor_desde_el_editor
  * - error
  * - finaliza_carga
- * - finaliza_carga_de_recursos
+ * - hace_click_sobre_el_canvas
  * - hacerFocoEnElEditor
  * - hacer_foco_en_pilas
  * - inicia_modo_depuracion_en_pausa
@@ -29,13 +30,8 @@ import Service from "@ember/service";
  * - se_actualiza_el_log
  * - selecciona_actor_desde_el_editor
  * - termina_de_mover_un_actor
- * - mientras_mueve_la_camara
+ * - plegar_codigo
  * - expandir_codigo
- * - duplicar_el_actor_seleccionado
- *
- * Otra señal que se emite para avisarle al webserver que cambió el código es:
- *
- * - recargar_proyecto
  *
  */
 

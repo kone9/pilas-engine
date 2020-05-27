@@ -1,4 +1,5 @@
 import { later } from "@ember/runloop";
+import $ from "jquery";
 import { Promise as EmberPromise } from "rsvp";
 
 export default async function esperarElemento(selector) {
@@ -6,7 +7,7 @@ export default async function esperarElemento(selector) {
     let cantidadDeIntentos = 0;
 
     function existeElemento() {
-      return document.querySelectorAll(selector).length > 0;
+      return $(selector).length > 0;
     }
 
     consultarExistenciaDiferida();
@@ -19,11 +20,7 @@ export default async function esperarElemento(selector) {
           cantidadDeIntentos += 1;
 
           if (cantidadDeIntentos > 20) {
-            fail(
-              new Error(
-                `No se encontró el elemento '${selector}', incluso con una espera.`
-              )
-            );
+            fail(new Error(`No se encontró el elemento '${selector}', incluso con una espera.`));
           } else {
             consultarExistenciaDiferida();
           }

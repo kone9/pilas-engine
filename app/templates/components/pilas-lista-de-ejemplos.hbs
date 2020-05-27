@@ -1,22 +1,24 @@
 {{yield}}
 
-{{#if ejemplos.tarea.last.isRunning}}
-  {{#each (range 0 cantidad_de_ejemplos)}}
-    <div class="dib v-top mb2 mr1">
-      <div class="relative bg-light-gray" style="width: 180px; height: 140px;"></div>
-    </div>
-  {{/each}}
-{{else}}
-  {{#each ejemplos.tarea.last.value.ejemplos as |ejemplo|}}
-    {{#link-to "ejemplos.ver" ejemplo.nombre tagName="div" class="dib pointer v-top mb2 mr2"}}
-      <div class="relative unselectable bg-light-gray" style="width: 180px; height: 140px;">
-        <div class="sprite-ejemplos capturas-{{ejemplo.nombre}}"></div>
-        <div class="text-shadow-1 absolute bottom-0 left-0 right-0 bg-black-50 pa1 white tc lato f7">{{ejemplo.nombre}}</div>
-        {{#pilas-ejemplos-es-nuevo ejemplo=ejemplo}}
-          <div class="absolute top-0 right-0 pa1 ma1 br2 black lato f7 bg-yellow">NUEVO</div>
-        {{/pilas-ejemplos-es-nuevo}}
-      </div>
-    {{/link-to}}
-  {{/each}}
+<div class="ma2">
 
-{{/if}}
+  <p class="lato">Lista de ejemplos</p>
+
+  {{#if ejemplos.tarea.last.isRunning}}
+    {{#each (range 0 5)}}
+      <div class="dib bg-skeleton" style="width: 180px; height: 140px;"></div>
+    {{/each}}
+  {{else}}
+    {{#each ejemplos.tarea.last.value.ejemplos as |ejemplo|}}
+      {{#link-to "ejemplos.ver" ejemplo.nombre tagName="div" class="dib pointer"}}
+        <div class="relative unselectable ma1 ba b--light-gray">
+          <img width="180" height="140" src="{{rootURL}}ejemplos/imagenes/{{ejemplo.nombre}}.png" alt="">
+          <div class="text-shadow-1 absolute bottom-1 left-0 right-0 white tc lato f7">{{ejemplo.nombre}}</div>
+        </div>
+      {{/link-to}}
+    {{/each}}
+
+
+  {{/if}}
+
+</div>

@@ -25,6 +25,12 @@ module("Integration | Component | pilas propiedad", function(hooks) {
     assert.ok(
       find("*")
         .textContent.trim()
+        .indexOf("100") > -1,
+      "debe aparecer el valor de la propiedad"
+    );
+    assert.ok(
+      find("*")
+        .textContent.trim()
         .indexOf("Rotacion") > -1,
       "debe aparecer la etiqueta de la propiedad"
     );

@@ -1,2 +1,0 @@
-Para editar estas animaciones se tiene que usar el software
-Spriter Pro y luego ejecutar el comando: make actualizar_imagenes

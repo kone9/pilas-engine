@@ -5,9 +5,6 @@
 /tmp
 /binarios
 /manuales
-/public/proyecto-exportable/node_modules/
-
-pilas-engine-compilado.zip
 
 dump.rdb
 .DS_Store
@@ -33,4 +30,3 @@ phaser
 /.node_modules.ember-try/
 /bower.json.ember-try
 /package.json.ember-try
-_book

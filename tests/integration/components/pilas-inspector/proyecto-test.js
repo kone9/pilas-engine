@@ -9,18 +9,14 @@ module("Integration | Component | pilas-inspector/proyecto", function(hooks) {
   test("it renders", async function(assert) {
     this.set("instancia_seleccionada", {
       ancho: 640,
-      alto: 480,
-      tamaño: "640x480",
-      fps: 60,
-      nombre_de_la_escena_inicial: "demo",
-      escenas: [{ nombre: "demo" }]
+      alto: 480
     });
 
     await render(hbs`{{pilas-inspector/proyecto
       instancia_seleccionada=instancia_seleccionada
-      escenas=escenas
     }}`);
 
-    assert.ok(this.element.textContent);
+    assert.ok(this.element.textContent.includes("640"));
+    assert.ok(this.element.textContent.includes("480"));
   });
 });

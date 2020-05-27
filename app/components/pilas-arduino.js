@@ -1,5 +1,4 @@
 import Component from "@ember/component";
-/*
 import { task, timeout } from "ember-concurrency";
 let serialport = {};
 let five = {};
@@ -8,7 +7,6 @@ if (window.enElectron) {
   serialport = requireNode("serialport");
   five = requireNode("johnny-five");
 }
-*/
 
 export default Component.extend({
   conectado: false,
@@ -17,7 +15,6 @@ export default Component.extend({
   haConectadoAlgunaVez: false,
   mostrarErrorDeReConexion: false,
 
-  /*
   tareaListarDispositivos: task(function*() {
     while (true) {
       serialport.list((err, ports) => {
@@ -48,12 +45,10 @@ export default Component.extend({
       yield timeout(4000);
     }
   }),
-  */
 
   didInsertElement() {
     this.set("dispositivos", []);
 
-    /*
     if (window.enElectron) {
       this.tareaListarDispositivos.perform({});
 
@@ -85,10 +80,8 @@ export default Component.extend({
         console.log("Board closed");
       });
     }
-    */
   },
   actions: {
-    /*
     prenderLed() {
       let five = this.five;
       var led = new five.Led(13);
@@ -100,6 +93,5 @@ export default Component.extend({
       var led = new five.Led(13);
       led.off();
     }
-    */
   }
 });

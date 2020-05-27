@@ -3,15 +3,12 @@ class Escena extends EscenaBase {
 
   iniciar() {}
 
-  pre_actualizar() {
+  actualizar() {
     this.cuadro += 1;
 
     if (this.cuadro % 60 === 0) {
-      let segundos_transcurridos = Math.floor(this.cuadro / 60);
-      this.cada_segundo(segundos_transcurridos);
-
       this.actores.map(actor => {
-        actor.cada_segundo(segundos_transcurridos);
+        actor.cada_segundo();
       });
     }
   }

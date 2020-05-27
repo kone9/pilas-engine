@@ -8,6 +8,6 @@ module("Integration | Component | pilas test", function(hooks) {
 
   test("it renders", async function(assert) {
     await render(hbs`{{pilas-test}}`);
-    assert.dom("*").exists();
+    assert.dom("*").hasText("Iniciando: 0 %");
   });
 });
