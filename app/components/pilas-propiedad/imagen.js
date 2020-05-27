@@ -2,6 +2,8 @@ import Component from "@ember/component";
 
 export default Component.extend({
   mostrar: false,
+  filtroPropuesto: "",
+  tagName: "",
 
   actions: {
     al_cambiar(valor) {

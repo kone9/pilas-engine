@@ -6,14 +6,26 @@ Prototipo de la nueva versión de pilas-engine
 
 La versión original de pilas se puede ver aquí: http://www.pilas-engine.com.ar
 
-## Artículos
+## Artículos y noticias
 
-- http://examplelab.com.ar/comenzamos-pilas-engine-2/ - Anuncio del comienzo del proyecto
-- http://foro.pilas-engine.com.ar/t/resumen-del-sprint-05/1592 - Resumen del sprint 5 (1 de Diciembre de 2018)
-- http://foro.pilas-engine.com.ar/t/resumen-del-sprint-04/1401/2 - Resumen del sprint 4 (5 de Junio de 2018)
-- http://foro.pilas-engine.com.ar/t/resumen-del-sprint-03/1389 - Resumen del sprint 3 (28 de Abril del 2018)
-- http://foro.pilas-engine.com.ar/t/resumen-del-sprint-02/1375 - Resumen del sprint 2 (31 de Marzo del 2018)
-- http://foro.pilas-engine.com.ar/t/resumen-del-sprint-01/1366 - Resumen del sprint 1 (20 de Marzo del 2018)
+- [Resumen del sprint 17 (23 de Mayo de 2020)](https://foro.pilas-engine.com.ar/t/resumen-del-sprint-17/1876)
+- [Resumen del sprint 16 (11 de Mayo de 2020)](https://foro.pilas-engine.com.ar/t/resumen-del-sprint-16/1862)
+- [Resumen del sprint 15 (26 de Abril de 2020)](https://foro.pilas-engine.com.ar/t/resumen-del-sprint-15)
+- [Resumen del sprint 14 (5 de Abril de 2020)](https://foro.pilas-engine.com.ar/t/resumen-del-sprint-14/1829)
+- [Resumen del sprint 13 (18 de Enero de 2020](https://foro.pilas-engine.com.ar/t/resumen-del-sprint-13/1807/2)
+- [Resumen del sprint 12 (21 de Diciembre de 2019)](https://foro.pilas-engine.com.ar/t/resumen-del-sprint-12/1802)
+- [Resumen del sprint 11 (16 de Octubre de 2019)](https://foro.pilas-engine.com.ar/t/resumen-del-sprint-11/1745)
+- [Resumen del sprint 10 (31 de Julio de 2019)](https://foro.pilas-engine.com.ar/t/resumen-del-sprint-10/1702)
+- [Resumen del sprint 9 (11 de Julio de 2019)](https://foro.pilas-engine.com.ar/t/resumen-del-sprint-09/1688)
+- [Resumen del sprint 8 (9 de Junio de 2019)](http://foro.pilas-engine.com.ar/t/resumen-del-sprint-08/1669)
+- [Resumen del sprint 7 (18 de Mayo de 2019)](http://foro.pilas-engine.com.ar/t/resumen-del-sprint-07/1656)
+- [Resumen del sprint 6 (27 de Abril de 2019)](http://foro.pilas-engine.com.ar/t/resumen-del-sprint-06/1648)
+- [Resumen del sprint 5 (1 de Diciembre de 2018)](http://foro.pilas-engine.com.ar/t/resumen-del-sprint-05/1592)
+- [Resumen del sprint 4 (5 de Junio de 2018)](http://foro.pilas-engine.com.ar/t/resumen-del-sprint-04/1401)
+- [Resumen del sprint 3 (28 de Abril del 2018)](http://foro.pilas-engine.com.ar/t/resumen-del-sprint-03/1389)
+- [Resumen del sprint 2 (31 de Marzo del 2018)](http://foro.pilas-engine.com.ar/t/resumen-del-sprint-02/1375)
+- [Resumen del sprint 1 (20 de Marzo del 2018)](http://foro.pilas-engine.com.ar/t/resumen-del-sprint-01/1366)
+- [Anuncio del comienzo del proyecto](https://www.examplelab.com.ar/2018/03/04/comenzamos-pilas-engine-2.html)
 
 ## Links útiles
 
@@ -77,13 +89,13 @@ obtuvieron desde: https://github.com/EmergingTechnologyAdvisors/node-serialport/
 
 ## Estilo de programación
 
-Si estás con ganas de participar del proyecto o enviar correcciones, tené
+Si estás con ganas de participar del proyecto o enviar correcciones, ten
 en cuenta que el código enviado debería estar en español (siempre que sea
 posible) y que las variables o métodos con varias palabras tienen que estar
 separadas por guiones bajos (por ejemplo "cantidad_de_actores")
 
 Además, es muy importante que tengas configurado tu editor para usar
-automáticamente prettier (https://prettier.io/).
+automáticamente Prettier (https://prettier.io/).
 
 ## Créditos
 
@@ -93,6 +105,13 @@ de varias herramientas y bibliotecas como:
 - https://phaser.io/
 - https://github.com/jdotrjs/phaser3-nineslice/
 - https://electronjs.org/
+- https://github.com/koffsyrup/FileSaver.js
+- https://github.com/lukeed/polka
+- https://github.com/lukeed/sirv
+- https://github.com/flyover/spriter.ts
+- https://github.com/nathancahill/split/tree/master/packages/splitjs
+- https://www.zondicons.com/
+- https://stuk.github.io/jszip/
 
 ## Próximas tareas a desarrollar
 

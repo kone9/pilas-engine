@@ -1,58 +1,52 @@
 import { later } from "@ember/runloop";
-import $ from "jquery";
 import Component from "@ember/component";
+
+// fallback para navegadores que no soportan .bind en las funciones.
+var bind = function(fn, me) {
+  return function() {
+    return fn.apply(me, arguments);
+  };
+};
 
 export default Component.extend({
   original_value: 0,
   intensidad: 0.01,
   editando: false,
+  posicion_inicial_x: null,
+  valor_inicial_al_comenzar_a_arrastrar: null,
 
-  didInsertElement() {
-    let element = this.$(".cursor-resize");
-    var initialX = 0;
+  cuando_pulsa(e) {
+    this.set("posicion_inicial_x", e.clientX);
+    this.set("valor_inicial_al_comenzar_a_arrastrar", this.value);
 
-    element.on("mousedown", mouse_down_event => {
-      later(() => {
-        initialX = mouse_down_event.pageX;
-        this.set("original_value", this.value);
-
-        $("html").on("mousemove", event => {
-          later(() => {
-            var intensidad = this.intensidad;
-
-            var mouse_dx = (event.pageX - initialX) * intensidad;
-
-            this.modificar(mouse_dx);
-            initialX = event.pageX;
-
-            return false;
-          });
-        });
-
-        $("html").on("mouseup", () => {
-          later(() => {
-            this.disconnectEvents();
-            return false;
-          });
-        });
-
-        $("html").on("mouseleave", () => {
-          later(() => {
-            this.disconnectEvents();
-            return false;
-          });
-        });
-      });
-    });
+    document.addEventListener("mousemove", this.cuando_mueve, false);
+    document.addEventListener("mouseup", this.cuando_suelta, false);
   },
 
-  disconnectEvents: function() {
-    $("html").unbind("mousemove");
-    $("html").unbind("mouseup");
+  cuando_mueve(e) {
+    let delta = (e.clientX - this.get("posicion_inicial_x")) * this.intensidad;
+    this.set("posicion_inicial_x", e.clientX);
+
+    this.modificar(delta);
+  },
+
+  cuando_suelta() {
+    document.removeEventListener("mousemove", this.cuando_mueve, false);
+    document.removeEventListener("mouseup", this.cuando_suelta, false);
+  },
+
+  didInsertElement() {
+    let etiqueta = this.element.querySelector(".data-etiqueta");
+    this.cuando_pulsa = bind(this.cuando_pulsa, this);
+    this.cuando_mueve = bind(this.cuando_mueve, this);
+    this.cuando_suelta = bind(this.cuando_suelta, this);
+
+    etiqueta.addEventListener("mousedown", this.cuando_pulsa, false);
   },
 
   willDestroyElement() {
-    this.disconnectEvents();
+    let etiqueta = this.element.querySelector(".data-etiqueta");
+    etiqueta.removeEventListener("mousedown", this.cuando_pulsa, false);
   },
 
   modificar(delta) {
@@ -84,8 +78,8 @@ export default Component.extend({
       this.set("editando", true);
 
       later(() => {
-        this.$("input").focus();
-        this.$("input")[0].select();
+        this.element.querySelector("input").focus();
+        this.element.querySelector("input").select();
       });
     },
     cuando_pierde_foco() {

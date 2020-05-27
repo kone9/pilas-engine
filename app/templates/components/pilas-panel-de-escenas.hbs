@@ -1,4 +1,4 @@
-<ul class="verdana f6 unselectable pa0 flex1 overflow-y-auto ba b--silver mt2 mb2 {{if desactivado "o-40 disabled"}}">
+<ul class="verdana f6 unselectable pa0 flex1 overflow-y-auto ba borde mt2 mb2 {{if desactivado "o-40 disabled"}}">
 
   <li role="button" class="pointer texto truncate pa1 {{if (eq seleccion 0) "bg-black-20" "hover-bg-black-10"}}" {{action cuandoSelecciona "proyecto"}}>
     ◆ proyecto
@@ -17,22 +17,42 @@
 
       <div class="dib fr f7">
         {{#if (and (eq ultimaEscenaSeleccionada escena.id) (not-eq seleccion 0))}}
-          {{pilas-boton-eliminar-con-confirmacion tipo="escena" titulo="¿Realmente quieres eliminar la escena?" accion=(action cuando_intenta_eliminar escena.id)}}
+          {{pilas-boton-eliminar-con-confirmacion contador=true tipo="escena" titulo="¿Quieres eliminar la escena?" accion=(action cuando_intenta_eliminar escena.id)}}
         {{/if}}
       </div>
 
     </li>
 
     {{#if (eq ultimaEscenaSeleccionada escena.id)}}
-      <ul>
+      <ul class="list">
         {{#each escena.actores as |actor|}}
-          <li role="button" class="truncate texto pa1 pointer {{if (eq seleccion actor.id) "bg-black-20" "hover-bg-black-10"}}" {{action cuandoSelecciona actor.id}}>
-            {{pilas-icono-de-actor actor=actor}} {{actor.nombre}}
+          <li role="button" class="truncate-text texto pa1 pointer {{if (eq seleccion actor.id) "bg-black-20" "hover-bg-black-10"}}" {{action cuandoSelecciona actor.id}}>
+            {{pilas-icono-de-actor actor=actor}}
+
+            {{#if (eq actor.activo false)}}
+              <span class="o-50">{{actor.nombre}}</span>
+            {{else}}
+              {{actor.nombre}}
+            {{/if}}
 
             <div class="dib fr f7">
               {{#if (eq seleccion actor.id)}}
-                {{pilas-boton-duplicar-actor accion=(action cuando_intenta_duplicar actor.id) accionx5=(action cuando_intenta_duplicar_x5 actor.id)}}
-                {{pilas-boton-eliminar-con-confirmacion tipo="actor" titulo="¿Realmente quieres eliminar este actor?" accion=(action cuando_intenta_eliminar actor.id)}}
+
+                {{#if (eq actor.activo false)}}
+                  {{pilas-indicador-inactivo}}
+                {{/if}}
+
+                {{pilas-boton-menu-actor
+                    escenas=escenas
+                    actor_id=actor.id
+                    escena_id=ultimaEscenaSeleccionada
+                    accionClonar=(action cuando_intenta_duplicar actor.id)
+                    accionClonarX5=(action cuando_intenta_duplicar_x5 actor.id)
+                    accionEliminar=(action cuando_intenta_eliminar actor.id)
+                    accionCuandoIntentaMoverAEscenaNueva=(action cuando_intenta_mover_a_escena_nueva actor ultimaEscenaSeleccionada)
+                    accionCuandoIntentaMoverAUnaEscena=(action cuando_intenta_mover_a_una_escena actor ultimaEscenaSeleccionada)
+                  }}
+
               {{/if}}
             </div>
 

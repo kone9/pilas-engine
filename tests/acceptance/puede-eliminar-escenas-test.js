@@ -1,5 +1,4 @@
 import { click, currentURL, visit } from "@ember/test-helpers";
-import $ from "jquery";
 import { module, test } from "qunit";
 import { setupApplicationTest } from "ember-qunit";
 import pulsar from "../helpers/pulsar";
@@ -15,6 +14,7 @@ module("Acceptance | puede ingresar al editor", function(hooks) {
     await visit("/");
 
     await pulsar("Abrir el editor");
+    localStorage.removeItem("pilas:proyecto_serializado");
     assert.equal(currentURL(), "/editor", "accede al editor correctamente");
 
     await esperarElemento("a#ejecutar");
@@ -25,12 +25,21 @@ module("Acceptance | puede ingresar al editor", function(hooks) {
     await pulsar("Detener");
     await esperar(PAUSA);
 
-    assert.equal($("[data-test='nombre-de-escena']").text(), "escena1escena2", "Corrobora que hay dos escenas (escena1 y escena2)");
+    assert.equal(
+      document.querySelectorAll("[data-test='nombre-de-escena']").length,
+      2,
+      "Corrobora que hay dos escenas (escena1 y escena2)"
+    );
 
     await click("#boton-eliminar-escena");
     await pulsar("Sí");
 
-    assert.equal($("[data-test='nombre-de-escena']").text(), "escena2", "Quedó una sola escena (escena2)");
+    assert.equal(
+      document.querySelectorAll("[data-test='nombre-de-escena']").length,
+      1,
+      "Quedó una sola escena (escena2)"
+    );
+
     await esperar(PAUSA);
   });
 });

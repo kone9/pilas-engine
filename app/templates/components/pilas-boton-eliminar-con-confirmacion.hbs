@@ -1,14 +1,31 @@
-<button id="boton-eliminar-{{tipo}}" class="bg-transparent no-outline p0 f7 o-50 pointer glow bn pa0" {{action "mostrar" bubbles=false}}>{{pilas-icono icono="borrar"}}{{yield}}</button>
-
-{{#pilas-modal alCerrar=(action "ocultar") visible=modalVisible id=idDialogo titulo="Cuidado" reducido=true}}
-
-  <div class="flex1 verdana f6">
-    {{titulo}}
+{{#if comoCelda}}
+  <div role="button" id="boton-eliminar-{{tipo}}" class="pa2 texto pointer hover-bg-black-10 f7 truncate" {{action "mostrar" bubbles=false}}>
+    {{pilas-icono icono="borrar"}} Eliminar
   </div>
+{{else}}
+  <button id="boton-eliminar-{{tipo}}" class="bg-transparent no-outline p0 f7 o-50 pointer glow bn pa0" {{action "mostrar" bubbles=false}}>{{pilas-icono icono="borrar"}}{{yield}}</button>
+{{/if}}
 
-  <div class="tc">
-    {{pilas-boton icono="si" accion=(action "ocultarEjecutandoAccion") texto="Sí" atajo="Enter"}}
-    {{pilas-boton icono="no" accion=(action "ocultar") texto="No" atajo="Escape"}}
+{{#if modalVisible}}
+  <div role="button" class="fixed z-1 absolute--fill" {{action "ocultar"}}></div>
+
+  <div class="absolute bg-fondo ba borde shadow-4 top-3 pt2 pb3 pa2 f7 z-999 ml3 w5">
+
+    <div class="texto f6 lh-copy pb2 tc">
+      {{titulo}}
+    </div>
+
+    {{#if contador}}
+      <div class="orange pb3 tc">
+        Esta acción no se podrá deshacer
+      </div>
+    {{/if}}
+
+
+    <div class="tc">
+      {{pilas-boton extraClass="boton-confirmacion" desactivado=tiempo icono="si" accion=(action "ocultarEjecutandoAccion") texto=texto_del_boton atajo="Enter"}}
+      {{pilas-boton extraClass="boton-confirmacion" icono="no" accion=(action "ocultar") texto="No" atajo="Escape"}}
+    </div>
+
   </div>
-
-{{/pilas-modal}}
+{{/if}}

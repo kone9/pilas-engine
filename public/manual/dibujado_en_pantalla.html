@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Dibujado simple en pantalla</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="estilo.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <div class="tc">
+    <a href="index.html">Regresar al índice</a>
+  </div>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Dibujado simple en pantalla</h1>
+</header>
+<p>En esta sección veremos como dibujar libremente, ya sean lineas, círculos, etc..</p>
+<p>Comenzaremos con una forma de dibujado muy sencilla, existe un actor llamado Pizarra que podemos colocar en una escena para dibujar figuras geométricas sencillas.</p>
+<p>Cuando se agrega el actor pizarra, vas a observar que soporta algunos métodos para dibujar. Esta es una lista de los más utilizados:</p>
+<h2 id="dibujar-círculos">Dibujar círculos</h2>
+<p>Para dibujar círculos tenemos una función que pinta el contenido de un círculo en base a 4 parámetros:</p>
+<ul>
+<li>x: la posición horizontal del centro del círculo.</li>
+<li>y: la posición vertical del centro del círculo.</li>
+<li>radio: el radio del círculo.</li>
+<li>color: el color de relleno que tendrá el círculo.</li>
+</ul>
+<p>Por ejemplo, esta llamada a la función generará un círculo en la posición <code>x=100 y=0</code> con un radio de 40 píxeles y de color rojo:</p>
+<pre><code>this.dibujar_circulo(100, 0, 40, &quot;rojo&quot;);</code></pre>
+<p><img src="imagenes/dibujado_en_pantalla.assets/circulo_rojo.png" /></p>
+<p>Opcionalmente, si quieres dibujar el contorno del círculo de otro color o con un grosor en particular podrías llamar a esta función:</p>
+<pre><code>this.dibujar_borde_de_circulo(100, 0, 40, &quot;negro&quot;, 2);</code></pre>
+<p><img src="imagenes/dibujado_en_pantalla.assets/circulo_con_borde.png" /></p>
+<p>Los primeros 3 parámetros son idénticos al de la función anterior, corresponden a los parámetros <code>x</code>, <code>y</code> y <code>radio</code>, mientras que el argumento que le sigue será el color del borde y el último el grosor en píxeles.</p>
+<h2 id="colores">Colores</h2>
+<p>En los ejemplos anteriores utilicé colores como “rojo”, “negro” y “verde”; sin embargo esta no es la única forma de especificar colores. Los nombres de colores son útiles y fáciles de recordar, pero no ofrecen mucha variedad.</p>
+<p>Otra forma de definir colores con mucha flexibilidad es mediante la función <code>pilas.colores.generar</code>. Esta función genera un color “mezclando” tres componentes de color (rojo, verde y azúl).</p>
+<p>Cada componente de color tienen que ser un número entre 0 y 255, por ejemplo:</p>
+<pre><code>let color_verde_oscuro = this.pilas.colores.generar(0, 100, 0);
+let color_verde_claro = this.pilas.colores.generar(0, 200, 0);</code></pre>
+<p>A su vez, una vez que tenemos el color generado, podemos usarlo en las funciones para dibujar. Por ejemplo, si queremos dibujar dos círculos con estos colores podemos escribir lo siguiente:</p>
+<pre><code>this.dibujar_circulo(-50, 50, 40, color_verde_claro);
+this.dibujar_circulo(+50, 50, 40, color_verde_oscuro);</code></pre>
+<p><img src="imagenes/dibujado_en_pantalla.assets/circulos.png" /></p>
+<h2 id="rectángulos">Rectángulos</h2>
+<p>De forma similar a los círculos, también existen funciones para dibujar rectángulos y bordes de rectángulos.</p>
+<pre><code>this.dibujar_rectangulo(0, 0, 120, 50, &quot;naranja&quot;);
+this.dibujar_borde_de_rectangulo(0, 0, 120, 50, &quot;rojo&quot;, 5);</code></pre>
+<p><img src="imagenes/dibujado_en_pantalla.assets/image-20190728093001144.png" /></p>
+<p>Los argumentos de estas funciones son: el punto de originen, en este caso <code>x=0 y=0</code>, luego el ancho y alto del rectángulo y por último el color.</p>
+<h2 id="lineas">Lineas</h2>
+<p>Para dibujar lineas, tenemos que especificar dos coordenadas, color y grosor de la linea:</p>
+<p>Por ejemplo, para dibujar una linea de color “verde” desde el punto (0, 0) al punto (200, 100) podemos escribir:</p>
+<pre><code>this.dibujar_linea(0, 0, 200, 100, &quot;verde&quot;, 10);</code></pre>
+<p><img src="imagenes/dibujado_en_pantalla.assets/image-20190728093336422.png" /></p>
+<h2 id="animaciones">Animaciones</h2>
+<p>Si bien el actor pizarra pude moverse en pantalla, tener una figura física e incluso ser utilizado como cualquier otro actor. También es posible usarlo para crear animaciones cuadro a cuadro.</p>
+<p>El actor Pizarra incluye una función llamada <code>limpiar</code> que si se combina con funciones de dibujado se pueden hacer algunas animaciones simples.</p>
+<p>Por ejemplo, si queremos dibujar una linea que señale la posición del mouse constántemente podemos hacerlo así, usando la función actualizar:</p>
+<pre><code>actualizar() {
+    this.limpiar();
+    this.dibujar_linea(0, 0, this.pilas.cursor_x, this.pilas.cursor_y, &quot;verde&quot;, 10);
+}</code></pre>
+<p><img src="imagenes/dibujado_en_pantalla.assets/image-20190728094930911.png" /></p>
+<div class="tc">
+  <div>
+    <a href="#" onclick="document.documentElement.scrollTo(0, 0);">Subir</a>
+  </div>
+
+  <div>
+    <a href="index.html">Regresar al índice</a>
+  </div>
+</div>
+</body>
+</html>

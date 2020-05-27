@@ -1,7 +1,9 @@
 class texto extends ActorTextoBase {
   propiedades = {
-    imagen: "invisible",
+    imagen: "imagenes:basicos/invisible",
     texto: "Hola mundo",
-    es_texto: true
+    es_texto: true,
+    z: -10,
+    fuente: "color-blanco-con-sombra"
   };
 }

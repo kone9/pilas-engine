@@ -1,0 +1,126 @@
+.theme-claro {
+  .input {
+    border: 1px solid #aaa;
+    box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+    outline: 0;
+  }
+
+  .input:focus {
+    border: 1px solid #0036ff;
+    box-shadow: 0 0 0 2px #6fb5f1;
+  }
+
+  .select {
+    padding: 2px;
+    outline: 0;
+    height: 26px;
+  }
+
+  .select:focus {
+  }
+
+  .spinner-color-de-fondo {
+    fill: #aaa;
+  }
+
+  .spinner-color {
+    fill: black;
+  }
+
+  .boton {
+    color: #454545;
+    vertical-align: top;
+    background-color: #e5e9e8;
+    box-shadow: inset 0 1px #fff;
+    border: 1px solid #9daca9;
+    border-radius: 4px;
+  }
+
+  .boton:hover {
+    background-color: #eff1f1;
+  }
+
+  .boton:focus {
+    border: 1px solid #0036ff;
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.36), 0 0 0 2px #6fb5f1;
+    outline: 0;
+  }
+
+  .boton:active {
+    border: 1px solid #9daca9;
+    background-color: #d2d6d6;
+    box-shadow: inset 0 1px rgba(0, 0, 0, 0.1);
+  }
+
+  .boton-miniatura {
+    color: #454545;
+    background-color: #e5e9e8;
+    border: 1px solid #9daca9;
+    border-radius: 4px;
+  }
+
+  .boton-miniatura:hover {
+    background-color: #eff1f1;
+  }
+
+  .boton-miniatura-pulsado {
+    border: 1px solid #9daca9;
+    background-color: #d2d6d6;
+    box-shadow: inset 0 1px rgba(0, 0, 0, 0.1);
+    outline: 0;
+  }
+
+  .boton-miniatura-pulsable {
+    vertical-align: bottom;
+    color: #454545;
+    background-color: #e5e9e8;
+    border: 1px solid #9daca9;
+    border-radius: 4px;
+  }
+
+  .boton-miniatura-pulsable:hover {
+    background-color: #eff1f1;
+  }
+
+  .boton-miniatura-pulsable:focus {
+    border: 1px solid #0036ff;
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.36), 0 0 0 2px #6fb5f1;
+    outline: 0;
+  }
+
+  .bg-fondo {
+    background-color: #dfe2e2;
+  }
+
+  .b--invisible:hover {
+    border-color: black;
+  }
+
+  .texto {
+    color: black;
+  }
+
+  .bg-skeleton {
+    background-color: #bbb;
+  }
+
+  .borde {
+    border-color: #aaa;
+  }
+
+  .bg-fondo-secundario {
+    background-color: #aaa;
+  }
+
+  .bb-dashed-on-hover:hover {
+    border-bottom: 1px dashed black;
+  }
+
+  .bb-dashed-on-hover {
+    border-bottom: 1px solid transparent;
+  }
+}
+
+.theme-claro.bg-fondo {
+  background-color: #dfe2e2;
+}

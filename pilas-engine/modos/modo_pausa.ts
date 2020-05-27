@@ -4,7 +4,7 @@ class ModoPausa extends Modo {
   pilas: Pilas;
 
   graphics_modo_pausa: any;
-  fps: any;
+  indicador_de_texto: any;
 
   posicion: number;
   sprites: any;
@@ -13,9 +13,24 @@ class ModoPausa extends Modo {
 
   tecla_izquierda: any;
   tecla_derecha: any;
+  fondo_anterior: any = null;
+
+  _anterior_valor_del_modo_posicion_activado: boolean;
+
+  _anterior_posicion_x_de_la_camara = 0;
+  _anterior_posicion_y_de_la_camara = 0;
 
   constructor() {
     super({ key: "ModoPausa" });
+  }
+
+  private crear_indicador_de_texto() {
+    this.indicador_de_texto = this.add.bitmapText(5, 10, "color-blanco-con-sombra", "");
+    this.indicador_de_texto.scrollFactorX = 0;
+    this.indicador_de_texto.scrollFactorY = 0;
+    this.indicador_de_texto.depth = 999999;
+
+    this.indicador_de_texto.align = 2;
   }
 
   preload() {}
@@ -26,84 +41,166 @@ class ModoPausa extends Modo {
     this.posicion = this.pilas.historia.obtener_cantidad_de_posiciones();
     this.total = this.pilas.historia.obtener_cantidad_de_posiciones();
     this.sprites = [];
+    this.crear_indicador_de_texto();
+
+    this._anterior_valor_del_modo_posicion_activado = this.pilas.depurador.modo_posicion_activado;
 
     let foto = this.pilas.historia.obtener_foto(1);
-    this.crear_fondo(foto.escena.fondo);
 
-    this.crear_sprites_desde_historia(this.posicion);
+    this.crear_fondo(foto.escena.fondo, foto.escena.ancho, foto.escena.alto);
 
     this.crear_canvas_de_depuracion_modo_pausa();
-    this.matter.systems.matterPhysics.world.createDebugGraphic();
 
-    this.tecla_izquierda = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.LEFT
-    );
-    this.tecla_derecha = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.RIGHT
-    );
+    this.actualizar_posicion(this.posicion);
+
+    this.tecla_izquierda = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+    this.tecla_derecha = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
     let t = this.pilas.historia.obtener_cantidad_de_posiciones();
     let datos_para_el_editor = { minimo: 0, posicion: t, maximo: t };
-    this.pilas.mensajes.emitir_mensaje_al_editor(
-      "comienza_a_depurar_en_modo_pausa",
-      datos_para_el_editor
-    );
+    this.pilas.mensajes.emitir_mensaje_al_editor("comienza_a_depurar_en_modo_pausa", datos_para_el_editor);
+    this.crear_manejadores_para_controlar_el_zoom(false);
   }
 
   private crear_sprites_desde_historia(posicion) {
     let foto = this.pilas.historia.obtener_foto(posicion);
 
+    // Elimina a todos los sprites de la escena.
     this.sprites.map(sprite => {
       if (sprite.figura) {
-        this.pilas.Phaser.Physics.Matter.Matter.World.remove(
-          this.pilas.modo.matter.world.localWorld,
-          sprite.figura
-        );
+        this.pilas.Phaser.Physics.Matter.Matter.World.remove(this.pilas.modo.matter.world.localWorld, sprite.figura);
       }
 
       if (sprite["texto"]) {
         sprite["texto"].destroy();
       }
 
+      if (sprite["fondo"]) {
+        sprite["fondo"].destroy();
+      }
+
       sprite.destroy();
     });
 
+    // limpia el canvas con los puntos de control de los
+    // actores.
+    this.graphics.clear();
+    this.fondo.setAlpha(0.8);
+
+    this.hacer_arratrable_el_fondo();
+    this.limitar_movimiento_de_la_camara_a_los_bordes_actuales(foto.escena);
+
     this.posicionar_la_camara(foto.escena);
+    this.posicionar_fondo(foto.escena);
 
-    this.fondo.setAlpha(0.6);
-
+    // Crea a todos los actores desde la foto actual.
     this.sprites = foto.actores.map(entidad => {
+      if (this.pilas.depurador.modo_posicion_activado) {
+        let { x, y } = this.pilas.utilidades.convertir_coordenada_de_pilas_a_phaser(entidad.x, entidad.y);
+
+        this.dibujar_punto_de_control(this.graphics, x, y);
+      }
+
       return this.crear_sprite_desde_entidad(entidad);
+    });
+
+    let minutos_como_numero = Math.floor(posicion / 60 / 60);
+    let segundos_como_numero = Math.floor(posicion / 60) % 60;
+
+    let minutos = `0${minutos_como_numero}`.slice(-2);
+    let segundos = `0${segundos_como_numero}`.slice(-2);
+
+    this.indicador_de_texto.text = `Tiempo: ${minutos}' ${segundos}''\nCuadro: ${posicion}\nCantidad de actores: ${foto.actores.length}`;
+    this.indicador_de_texto.x = this.ancho - this.indicador_de_texto.width - 10;
+  }
+
+  posicionar_fondo(escena) {
+    let dx = escena.desplazamiento_del_fondo_x || 0;
+    let dy = escena.desplazamiento_del_fondo_y || 0;
+
+    let posicion_de_la_camara = {
+      x: escena.camara_x,
+      y: -escena.camara_y
+    };
+
+    if (this.fondo) {
+      this.fondo.x = posicion_de_la_camara.x;
+      this.fondo.y = posicion_de_la_camara.y;
+
+      this.fondo.tilePositionX = posicion_de_la_camara.x + dx;
+      this.fondo.tilePositionY = posicion_de_la_camara.y + dy;
+    }
+  }
+
+  posicionar_la_camara(datos_de_la_escena) {
+    let x = datos_de_la_escena.camara_x;
+    let y = -datos_de_la_escena.camara_y;
+
+    // posiciona la cámara siempre y cuando haga falta porque cambió la cámara
+    // de lugar respecto del cuadro anterior. Esto se hace para permitir cambiar
+    // el cuadro en el modo historia manteniendo el zoom y desplazamiento realizado
+    // con el mouse.
+    if (this._anterior_posicion_x_de_la_camara !== x || this._anterior_posicion_y_de_la_camara !== y) {
+      this.cameras.cameras[0].setScroll(x, y);
+      this._anterior_posicion_x_de_la_camara = x;
+      this._anterior_posicion_y_de_la_camara = y;
+    }
+  }
+
+  limitar_movimiento_de_la_camara_a_los_bordes_actuales(escena) {
+    let x = escena.camara_x;
+    let y = -escena.camara_y;
+
+    this.cameras.cameras[0].setBounds(x, y, this.ancho, this.alto);
+  }
+
+  hacer_arratrable_el_fondo() {
+    this.fondo.setInteractive();
+    this.input.setDraggable(this.fondo, undefined);
+
+    let escena = this;
+
+    this.input.on("dragstart", (pointer, gameObject) => {
+      this.posicion_anterior_de_arrastre = pointer.position.clone();
+
+      if (escena.pilas.utilidades.es_firefox()) {
+        escena.input.setDefaultCursor("grabbing");
+      } else {
+        escena.input.setDefaultCursor("-webkit-grabbing");
+      }
+    });
+
+    this.input.on("drag", (pointer, gameObject, dragX, dragY) => {
+      this.desplazar_la_camara_desde_el_evento_drag(pointer);
+    });
+
+    this.input.on("dragend", (pointer, gameObject) => {
+      escena.input.setDefaultCursor("default");
     });
   }
 
+  desplazar_la_camara_desde_el_evento_drag(pointer) {
+    let zoom = this.cameras.main.zoom;
+    let factor = this.obtener_factores();
+    let dx = this.posicion_anterior_de_arrastre.x - pointer.position.x;
+    let dy = this.posicion_anterior_de_arrastre.y - pointer.position.y;
+
+    this.cameras.main.scrollX += dx / factor.x / zoom;
+    this.cameras.main.scrollY += dy / factor.y / zoom;
+
+    this.posicion_anterior_de_arrastre = pointer.position.clone();
+  }
+
+  obtener_factores() {
+    let factor_horizontal = Math.min(1, this.ancho / this.alto);
+    let factor_vertical = Math.min(1, this.alto / this.ancho);
+    return { x: factor_horizontal, y: factor_vertical };
+  }
+
   update() {
-    this.graphics.clear();
-
-    if (this.fps) {
-      this.fps.alpha = 0;
-      this.fps_extra.alpha = 0;
-    }
-
-    if (this.pilas.depurador.mostrar_fisica) {
-      this.matter.systems.matterPhysics.world.debugGraphic.setAlpha(1);
-    } else {
-      this.matter.systems.matterPhysics.world.debugGraphic.setAlpha(0);
-    }
-
-    if (this.pilas.depurador.modo_posicion_activado) {
-      let foto = this.pilas.historia.obtener_foto(this.posicion);
-      foto.actores.map(sprite => {
-        let {
-          x,
-          y
-        } = this.pilas.utilidades.convertir_coordenada_de_pilas_a_phaser(
-          sprite.x,
-          sprite.y
-        );
-
-        this.dibujar_punto_de_control(this.graphics, x, y);
-      });
+    if (this._anterior_valor_del_modo_posicion_activado !== this.pilas.depurador.modo_posicion_activado) {
+      this.actualizar_posicion(this.posicion);
+      this._anterior_valor_del_modo_posicion_activado = this.pilas.depurador.modo_posicion_activado;
     }
 
     if (this.tecla_derecha.isDown) {
@@ -114,15 +211,44 @@ class ModoPausa extends Modo {
       this.retroceder_posicion();
     }
 
-    this.posicionar_fondo();
+    if (this.pilas.depurador.mostrar_fisica) {
+      this.canvas_fisica.setAlpha(1);
+    } else {
+      this.canvas_fisica.setAlpha(0);
+    }
+  }
+
+  dibujar_sensores_sobre_canvas_fisica(posicion) {
+    let canvas = this.canvas_fisica;
+    let foto = this.pilas.historia.obtener_foto(posicion);
+
+    foto.actores.map(entidad => {
+      entidad.sensores.map(sensor => {
+        this.dibujar_figura_desde_vertices(canvas, 2, 0xff4040, sensor);
+      });
+    });
   }
 
   crear_sprite_desde_entidad(entidad) {
-    let { x, y } = this.pilas.utilidades.convertir_coordenada_de_pilas_a_phaser(
-      entidad.x,
-      entidad.y
-    );
-    let sprite = this.add.sprite(x, y, entidad.imagen);
+    let nombre = entidad.imagen;
+    let sprite = null;
+    let galeria = null;
+    let imagen = null;
+    let { x, y } = this.pilas.utilidades.convertir_coordenada_de_pilas_a_phaser(entidad.x, entidad.y);
+
+    if (nombre.indexOf(":") > -1) {
+      galeria = nombre.split(":")[0];
+      imagen = nombre.split(":")[1];
+    } else {
+      galeria = null;
+      imagen = nombre;
+    }
+
+    if (galeria) {
+      sprite = this.add.sprite(x, y, galeria, imagen);
+    } else {
+      sprite = this.add.sprite(x, y, imagen);
+    }
 
     sprite.angle = -entidad.rotacion;
     sprite.setOrigin(entidad.centro_x, entidad.centro_y);
@@ -133,14 +259,52 @@ class ModoPausa extends Modo {
     sprite.setFlipY(entidad.espejado_vertical);
     sprite.depth = -entidad.z;
 
+    if (entidad.fijo) {
+      sprite.setScrollFactor(0, 0);
+    }
+
     if (entidad.texto) {
-      sprite["texto"] = this.pilas.modo.add.text(0, 0, entidad.texto);
-      sprite["texto"].setFontFamily("verdana");
+      sprite["texto"] = this.pilas.modo.add.bitmapText(0, 0, entidad.fuente, entidad.texto);
+      sprite["texto"].depth = sprite.depth;
+
+      if (entidad.fondo) {
+        let imagen = this.obtener_imagen_para_nineslice(entidad.fondo);
+        let f = this.pilas.modo.add.nineslice(40, 0, 30, 20, imagen, 10, 10);
+        sprite["fondo"] = f;
+        sprite["fondo_imagen"] = entidad.fondo;
+      }
+
       this.copiar_valores_de_sprite_a_texto(sprite);
+
+      if (sprite["fondo"]) {
+        sprite["fondo"].depth = sprite["texto"].depth - 1;
+        sprite["fondo"].x = sprite["texto"].x;
+        sprite["fondo"].y = sprite["texto"].y;
+
+        sprite["fondo"].x += 30 * sprite["texto"].originX - 30 * 0.5;
+        sprite["fondo"].y += 30 * sprite["texto"].originY - 30 * 0.5;
+        sprite["fondo"].setOrigin(sprite["texto"].originX, sprite["texto"].originY);
+
+        // el dialogo es un tipo de fondo especial, que queda mal
+        // si el texto está muy arriba.
+        if (entidad.fondo.includes("dialogo")) {
+          sprite["fondo"].y += 4;
+        }
+
+        if (entidad.fijo) {
+          sprite["fondo"].setScrollFactor(0, 0);
+        }
+      }
+
+      if (entidad.fijo) {
+        sprite["texto"].setScrollFactor(0, 0);
+      }
     }
 
     if (entidad.figura) {
       sprite["figura"] = this.crear_figura_estatica_para(entidad);
+      sprite["figura"].es_sensor = entidad.figura_sensor;
+      sprite["figura"].es_dinamica = entidad.figura_dinamica;
     }
 
     return sprite;
@@ -152,24 +316,21 @@ class ModoPausa extends Modo {
     this.posicion = Math.max(this.posicion, 0);
 
     this.crear_sprites_desde_historia(this.posicion);
+
+    this.actualizar_canvas_fisica();
+    this.dibujar_sensores_sobre_canvas_fisica(this.posicion);
   }
 
   avanzar_posicion() {
     this.posicion += 1;
     this.actualizar_posicion(this.posicion);
-    this.pilas.mensajes.emitir_mensaje_al_editor(
-      "cambia_posicion_dentro_del_modo_pausa",
-      { posicion: this.posicion }
-    );
+    this.pilas.mensajes.emitir_mensaje_al_editor("cambia_posicion_dentro_del_modo_pausa", { posicion: this.posicion });
   }
 
   retroceder_posicion() {
     this.posicion -= 1;
     this.actualizar_posicion(this.posicion);
-    this.pilas.mensajes.emitir_mensaje_al_editor(
-      "cambia_posicion_dentro_del_modo_pausa",
-      { posicion: this.posicion }
-    );
+    this.pilas.mensajes.emitir_mensaje_al_editor("cambia_posicion_dentro_del_modo_pausa", { posicion: this.posicion });
   }
 
   crear_canvas_de_depuracion_modo_pausa() {
@@ -177,8 +338,6 @@ class ModoPausa extends Modo {
     graphics_modo_pausa.depth = 190;
     this.graphics_modo_pausa = graphics_modo_pausa;
 
-    this.pilas.historia.dibujar_puntos_de_las_posiciones_recorridas(
-      graphics_modo_pausa
-    );
+    this.pilas.historia.dibujar_puntos_de_las_posiciones_recorridas(graphics_modo_pausa);
   }
 }

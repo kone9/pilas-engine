@@ -17,7 +17,7 @@ function getFrameById(id) {
 }
 
 export default Component.extend({
-  classNames: ["monaco-editor", "w-100", "flex1", "ba", "b--light-gray"],
+  classNames: ["monaco-editor", "w-100", "flex1", "flex"],
   code: "// demo",
   loading: true,
   readOnly: false,
@@ -85,10 +85,7 @@ export default Component.extend({
     this._super(...arguments);
 
     const subscription = event => {
-      if (
-        event.origin != utils.HOST &&
-        event.origin != utils.HOST.replace("http:", "https:")
-      ) {
+      if (event.origin != utils.HOST && event.origin != utils.HOST.replace("http:", "https:")) {
         return;
       }
 
@@ -100,11 +97,7 @@ export default Component.extend({
 
       if (event.source === this.frame && event.data && event.data.message) {
         if (event.data.message === "load-complete") {
-          this.onLoadEditor(
-            this.frame.editor,
-            this.frame.monaco,
-            this.frame.window
-          );
+          this.onLoadEditor(this.frame.editor, this.frame.monaco, this.frame.window);
         }
 
         if (event.data.message === "on-save") {
@@ -176,14 +169,9 @@ export default Component.extend({
           }
 
           #status {
-            display: block;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            font-family: monospace;
-            padding: 5px;
+            display: none !important;
           }
+
         </style>
 
         <script>
@@ -296,8 +284,7 @@ export default Component.extend({
     frameDoc.close();
 
     this.bus.on("hacerFocoEnElEditor", this, "hacerFoco");
-    this.bus.on("plegar_codigo", this, "plegar_codigo");
-    this.bus.on("expandir_codigo", this, "expandir_codigo");
+    this.bus.on("usar_receta", this, "usar_receta");
   },
 
   onLoadEditor(editor, monaco, window) {
@@ -318,31 +305,39 @@ export default Component.extend({
 
   hacerFoco() {
     let editor = this.editor;
-    let iframe = this.$("iframe");
+    let iframe = this.element.querySelector("iframe");
 
-    if (iframe) {
-      iframe[0].contentWindow.focus();
-    }
+    setTimeout(() => {
+      if (iframe) {
+        iframe.contentWindow.focus();
+      }
 
-    if (editor) {
-      editor.focus();
-      window.editor = editor;
-    }
+      if (editor) {
+        editor.focus();
+        window.editor = editor;
+      }
+    }, 100);
   },
 
-  plegar_codigo() {
-    this.editor.getAction("editor.foldLevel2").run();
-  },
+  /*
+   * Inserta la receta de código al final del código actual.
+   */
+  usar_receta(receta) {
+    let codigo = this.editor.getModel().getValue();
 
-  expandir_codigo() {
-    this.editor.getAction("editor.unfoldAll").run();
+    let posicionFinal = codigo.lastIndexOf("}");
+    codigo = codigo.substring(0, posicionFinal) + "\n" + receta.codigo + "\n}";
+
+    let codigoFormateado = formatear(codigo);
+
+    let pos = this.editor.getPosition();
+    this.editor.getModel().setValue(codigoFormateado);
+    this.editor.setPosition(pos);
   },
 
   willDestroyElement() {
     this._super(...arguments);
     window.removeEventListener("message", this._subscription);
     this.bus.off("hacerFocoEnElEditor", this, "hacerFoco");
-    this.bus.off("plegar_codigo", this, "plegar_codigo");
-    this.bus.off("expandir_codigo", this, "expandir_codigo");
   }
 });

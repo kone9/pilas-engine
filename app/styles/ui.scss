@@ -1,0 +1,255 @@
+.sprite {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -3px;
+}
+
+.bg-primario {
+  background-color: rgb(245, 245, 245);
+}
+
+:root,
+.ember-application,
+.ember-application > div.ember-view {
+  height: 100%;
+}
+
+.columns {
+  display: flex;
+  flex: 1;
+}
+
+.flex1 {
+  flex: 1 0px;
+}
+
+body {
+  overflow: hidden;
+}
+
+.icono-de-actor {
+  width: 12px;
+  height: 12px;
+  background-color: #eee;
+  border: 1px solid gray;
+}
+
+.hover-border {
+  border-color: white;
+}
+
+.hover-border:hover {
+  border-color: black;
+}
+
+span {
+  outline: 0;
+}
+
+.bg-fondo {
+  transition: background-color 500ms ease;
+}
+
+.boton {
+  transition: background-color 750ms ease;
+  height: 37px;
+  user-select: none;
+}
+
+.boton-miniatura {
+  height: 27px;
+  padding: 6px;
+  user-select: none;
+  text-shadow: none !important;
+}
+
+.boton-miniatura-rojo {
+  color: #ffc0c0 !important;
+  background-color: #962525 !important;
+}
+
+span.atajo {
+  font-size: 10px;
+  border-radius: 2px;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.boton-miniatura-pulsable {
+  height: 27px;
+  padding: 6px;
+  user-select: none;
+  text-shadow: none !important;
+}
+
+.boton-principal {
+  height: 55px !important;
+}
+
+.icono-boton {
+  width: 12px;
+  height: 12px;
+}
+
+.ember-power-select-trigger,
+.ember-power-select-options {
+  font-family: verdana;
+  font-size: small;
+}
+
+.ember-power-select-multiple-option {
+  /* .truncate */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ember-power-select-option {
+  /* .truncate */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* hack para que se puedan cerrar los modales en mobile. */
+[data-ember-action] {
+  cursor: pointer;
+}
+
+.height-revert {
+  height: revert !important;
+}
+
+.bg-fondo-canvas {
+  background-color: #424242;
+}
+
+.celda-actor {
+  width: 130px;
+  height: 100px;
+}
+
+.w-input-inspector {
+  width: 117px;
+}
+
+.hide-overflow-x {
+  overflow-x: hidden;
+}
+
+.ancho-panel-propiedades {
+  width: 300px;
+  min-width: 300px;
+  max-width: 300px;
+}
+
+.dialogo-medio {
+  max-height: 30em;
+}
+
+.vh-100-min-header {
+  height: calc(100vh - 30px);
+}
+
+.h-header {
+  height: 3/0px;
+}
+
+.break-all {
+  word-break: break-all;
+}
+
+.truncate-text {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.flex11 {
+  flex: 1 1;
+}
+
+.w-panel-colapsado {
+  width: 36px;
+}
+
+.texto-vertical-del-panel-editor {
+  top: 0px;
+  right: -60px;
+  width: 140px;
+}
+
+.texto-vertical-del-panel-de-escenas {
+  top: 37px;
+  right: -60px;
+  width: 140px;
+}
+
+.separador-vertical {
+  height: 26px;
+}
+
+.pilas-grilla-de-actores {
+  height: calc(100vh - 57px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.contenedor-boton-borrar-cuadro {
+  right: -8px;
+  top: -8px;
+}
+
+.boton-borrar-cuadro {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+}
+
+.contenedor-boton-mover {
+  left: 11px;
+  bottom: -8px;
+  z-index: 99;
+}
+
+.boton-mover {
+  width: 40px;
+  height: 16px;
+}
+
+.pulsable:active {
+  transform: translateY(2px);
+}
+
+.flex-end {
+  place-content: flex-end;
+}
+
+.no-spinners {
+  -moz-appearance: textfield;
+}
+
+.no-spinners::-webkit-outer-spin-button,
+.no-spinners::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.ember-basic-dropdown-trigger:focus {
+  outline: none;
+}
+
+.panel-maximizado {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+}
+
+.boton-confirmacion {
+  width: 90px !important;
+}

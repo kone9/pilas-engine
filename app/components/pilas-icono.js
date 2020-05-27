@@ -1,9 +1,9 @@
-import Component from '@ember/component';
+import Component from "@ember/component";
 
 export default Component.extend({
   tagName: "span",
 
-  classNames: ["css-icon"],
-  classNameBindings: ["icono", "conSeparacion:mr2"],
+  classNames: ["sprite"],
+  classNameBindings: ["icono", "conSeparacion:mr2", "class"],
   conSeparacion: false
 });

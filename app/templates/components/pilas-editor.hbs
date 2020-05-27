@@ -1,168 +1,132 @@
-<div class="{{if oscuro "theme-oscuro" "theme-claro"}} bg-fondo vh-100 wrapper verdana flex flex-column">
+{{pilas-proyecto proyecto=proyecto}}
 
-  <div class="h2-5 flex">
-
-    <div class="pa2 truncate">
-      {{pilas-boton-regresar confirmar=hay_cambios_por_guardar}}
-
-      {{#en-electron}}
-        {{pilas-boton icono="abrir" desactivado=cargando accion=(action "cuando_abre") demora=0 texto="Abrir"}}
-      {{/en-electron}}
-
-      {{#en-electron}}
-        {{pilas-boton icono="guardar" desactivado=cargando accion=(action "cuando_guarda"  proyecto) demora=0 texto="Guardar"}}
-      {{else}}
-        {{pilas-boton icono="guardar" desactivado=cargando accion=(action "cuando_guarda"  proyecto) demora=1 texto="Guardar"}}
-      {{/en-electron}}
-
-      {{pilas-boton-preferencias icono="preferencias" permitir_modo_pausa=permitir_modo_pausa desactivado=(not estado.puedeEjecutar)}}
+{{#if ocultar_interfaz}}
+  <div class="flex flex-column {{if oscuro "theme-oscuro" "theme-claro"}} pa2 fixed top-0 left-0 right-0 bottom-0 bg-fondo z-9999">
+    <div class="h1">&nbsp;</div>
+    <div class="mt2">
+      {{pilas-skeleton ancho=100 alto=40}}
     </div>
-
-    <div class="flex1">
+    <div class="flex1 bg-skeleton mt1">
     </div>
-
-    <div class="pa2 truncate">
-      {{pilas-interruptor padding="pa1" resaltar=false icono="panel-izquierdo" variable=mostrarPropiedades texto="Panel de actores" texto_corto="Actores"}}
-      {{pilas-interruptor padding="pa1" resaltar=false icono="panel-central" deshabilitado=(not puede_intentar_expandir_el_panel_de_previsualizacion) variable=expandirJuego texto="Expandir previsualización" texto_corto="Previs."}}
-      {{pilas-interruptor dataTest="panel-derecho" padding="pa1" resaltar=false icono="panel-derecho" variable=mostrarEditor texto="Panel del editor" texto_corto="Editor"}}
-    </div>
-
   </div>
+{{/if}}
 
-  <section class="flex1 flex bt b--silver h-50">
+<div class="{{if oscuro "theme-oscuro" "theme-claro"}} bg-fondo vh-100 wrapper verdana flex flex-column">
+  <div id="modal"></div>
+
+  <div id="ember-basic-dropdown-wormhole" class={{if oscuro "theme-oscuro" "theme-claro"}}></div>
+
+  {{pilas-editor-header
+      hay_cambios_por_guardar=hay_cambios_por_guardar
+      cargando=cargando
+      proyecto=proyecto
+      estado=estado
+      mostrarModalDeAnimaciones=mostrarModalDeAnimaciones
+      mostrarModalDeSonidos=mostrarModalDeSonidos
+      pixelart=pixelart
+
+      cuando_crea_un_proyecto=(action "cuando_crea_un_proyecto")
+      cuando_abre=(action "cuando_abre")
+      cuando_guarda=(action "cuando_guarda" proyecto)
+      tamano=tamano
+      modoVim=modoVim
+      oscuro=oscuro
+      permitir_modo_pausa=permitir_modo_pausa
+  }}
+
+  <section class="flex1 flex bt borde h-50">
     <div class="columns">
 
-      <div class="w6 {{if mostrarPropiedades "flex flex-column" "dn"}} br b--light-silver pa2 ">
+      {{pilas-editor-panel-de-propiedades
+        mostrarPropiedades=mostrarPropiedades
+        estado=estado
+        proyecto=proyecto
+        escenaActual=escenaActual
+        seleccion=seleccion
+        cuandoSelecciona=(action "cuandoSelecciona")
+        cuando_intenta_eliminar=(action "cuando_intenta_eliminar")
 
-        <div class="unselectable">
-          {{pilas-boton icono="escena" desactivado=(not estado.puede_editar) accion=(action "agregarEscena" proyecto) texto="Crear Escena"}}
-          {{pilas-crear-actor icono="actor" desactivado=(not estado.puede_editar) cuandoQuiereCrearActor=(action "agregar_actor" proyecto) modalVisible=mostrarModalCreacionDeActor}}
-        </div>
+        ultimaEscenaSeleccionada=ultimaEscenaSeleccionada
+        instancia_seleccionada=instancia_seleccionada
+        tipo_de_la_instancia_seleccionada=tipo_de_la_instancia_seleccionada
 
-        {{pilas-panel-de-escenas
-            escenas=proyecto.escenas
-            escenaActual=escenaActual
+        cuando_intenta_duplicar=(action "cuando_intenta_duplicar")
+        cuando_intenta_duplicar_x5=(action "cuando_intenta_duplicar_x5")
+        cuando_intenta_mover_a_una_escena=(action "mover_actor_a_una_escena" proyecto)
+        cuando_intenta_mover_a_escena_nueva=(action "mover_actor_a_escena_nueva" proyecto)
 
-            seleccion=seleccion
-            cuandoSelecciona=(action "cuandoSelecciona")
-            cuando_intenta_eliminar=(action "cuando_intenta_eliminar")
-            ultimaEscenaSeleccionada=ultimaEscenaSeleccionada
-            desactivado=(not estado.puede_editar)
+        actorSeleccionado=actorSeleccionado
 
-            cuando_intenta_duplicar=(action "cuando_intenta_duplicar")
-            cuando_intenta_duplicar_x5=(action "cuando_intenta_duplicar_x5")
+        agregar_escena=(action "agregarEscena" proyecto)
+        agregar_actor=(action "agregar_actor" proyecto)
+        mostrarModalCreacionDeActor=mostrarModalCreacionDeActor
 
-            actorSeleccionado=actorSeleccionado
-          }}
+        cuando_cambia_un_nombre_de_actor=(action "cuando_cambia_un_nombre_de_actor")
+        cuando_cambia_un_nombre_de_escena=(action "cuando_cambia_un_nombre_de_escena")
+        cuandoModificaObjeto=(action "cuandoModificaObjeto")
+        cuando_modifica_escena=(action "cuando_modifica_escena")
+        cuando_modifica_proyecto=(action "cuando_modifica_proyecto")
 
-        {{pilas-inspector
+      }}
+
+      {{pilas-editor-panel-de-juego-con-canvas
+        mostrarEditor=mostrarEditor
+        estado=estado
+        ejecutar=(action "ejecutar")
+        grilla=grilla
+        zoom=zoom
+        modoZoom=modoZoom
+        deshacer=(action "deshacer")
+        detener=(action "detener")
+        detener_y_volver_al_editor=(action "detener_y_volver_al_editor")
+        existe_un_error_reciente=existe_un_error_reciente
+        pausar=(action "pausar")
+        posicion=posicion
+        historiaPosicion=historiaPosicion
+        nombre_del_contexto=nombre_del_contexto
+        recursos=recursos
+        pos=pos
+        fps=fps
+        minimapa=minimapa
+        fisica=fisica
+        oscuro=oscuro
+        fisica_en_modo_ejecucion=fisica_en_modo_ejecucion
+        pixelart=pixelart
+        mostrarInterprete=mostrarInterprete
+        log=log
+        mostrar=mostrarInterprete
+        proyecto=proyecto
+        historiaMaximo=historiaMaximo
+        historiaMinimo=historiaMinimo
+        permitir_modo_pausa=permitir_modo_pausa
+        cambiar_posicion=(action "cambiarPosicion")
+
+        panelMaximizado=panelMaximizado
+        maximizar=maximizarCanvas
+      }}
+
+      {{pilas-editor-panel-de-codigo
+          mostrarEditor=mostrarEditor
+          estado=estado
+
           instancia_seleccionada=instancia_seleccionada
           tipo_de_la_instancia_seleccionada=tipo_de_la_instancia_seleccionada
 
-          cuandoModificaObjeto=(action "cuandoModificaObjeto")
-          cuando_modifica_escena=(action "cuando_modifica_escena")
-          cuando_modifica_proyecto=(action "cuando_modifica_proyecto")
-          desactivado=(not estado.puede_editar)
-        }}
+          titulo_del_codigo=tituloDelCodigo
+          codigo=codigo
+          oscuro=oscuro
+          modoVim=modoVim
+          tamano=tamano
 
-      </div>
+          cuando_termino_de_cargar_monaco_editor=(action "cuando_termino_de_cargar_monaco_editor")
+          cuandoGuardaDesdeElEditor=(action "cuandoGuardaDesdeElEditor")
+          cuando_cambia_el_codigo=(action "cuando_cambia_el_codigo")
 
-      <div class="flex {{if debe_expandir_el_panel_de_previsualizacion "flex1" "w5"}} flex-column bg-fondo pa2 unselectable">
-
-        <div class="mb2 flex" style="padding-bottom: 3px ">
-          {{#if estado.puedeEjecutar}}
-            {{pilas-boton id="ejecutar" accion=(action "ejecutar") texto="Ejecutar" icono="ejecutar"}}
-
-            <div class="dib f6 flex1 tr">
-            </div>
-
-          {{/if}}
-
-          {{#if estado.puedeDetener}}
-            {{pilas-boton id="detener" accion=(action "detener") texto="Detener" icono="detener"}}
-          {{/if}}
-
-          {{#if permitir_modo_pausa}}
-            {{#if estado.puedePausar}}
-              {{pilas-boton id="pausar" extraClass="ml2" desactivado=existe_un_error_reciente accion=(action "pausar") texto="Pausar" icono="pausa"}}
-            {{/if}}
-
-            {{#if estado.pausaActivada}}
-              <div class="dib ma2 f6 fr flex1 flex">
-
-                <div class="truncate texto w5 f7 unselectable tr pt1 pr1 {{if debe_expandir_el_panel_de_previsualizacion "" "dn"}}">
-                  Cuadro: {{plus posicion}} / {{tiempo (plus posicion)}}
-                </div>
-
-                <input class="v-btm w-100" type="range" id="posicion" min={{historiaMinimo}} max={{historiaMaximo}} oninput={{action "cambiarPosicion" value="target.value"}} value={{historiaPosicion}}>
-
-              </div>
-
-            {{/if}}
-          {{/if}}
-
-          {{#if estado.ModoCargando}}
-            {{pilas-skeleton ancho=100 alto=40}}
-            <div style="height: 30px; display: inline-block">
-              &nbsp;
-            </div>
-          {{/if}}
-        </div>
-
-        {{pilas-canvas
-                  ancho=proyecto.ancho
-                  alto=proyecto.alto
-                  recursos=recursos
-                  mantenerFoco=estado.mantenerFoco
-                  cuandoPulsaEscapeEnModoEjecucion=(action "detener")
-                  pos=pos
-                  fps=fps
-                  fisica=fisica
-                }}
-
-        <div class="h2 ba br b--gray mt2">
-          {{pilas-interruptor texto="Intérprete" rojo=existe_un_error_reciente variable=mostrarInterprete}}
-
-          <div class="fr {{if debe_expandir_el_panel_de_previsualizacion "" "dn"}} {{if estado.puede_modificar_depurador "" "o-60 disabled"}}">
-            {{pilas-interruptor texto="fisica" variable=fisica}}
-            {{pilas-interruptor deshabilitado=estado.pausaActivada texto="fps" variable=fps}}
-            {{pilas-interruptor texto="pos" variable=pos}}
-          </div>
-
-        </div>
-
-        {{pilas-interprete log=log mostrar=mostrarInterprete habilitado=estado.puede_usar_el_interprete}}
-
-      </div>
-
-      <div class="flex1 {{if mostrarEditor "flex flex-column" "dn"}} bl b--light-silver {{if oscuro "bg-black"}}">
-
-        <div class="unselectable pa2 flex bg-fondo">
-          <div class="flex1">
-          </div>
-
-          <div class="relative">
-            {{pilas-boton id="plegar" extraClass="" desactivado=false accion=(action "plegar_codigo") texto="" icono="plegar"}}
-            {{pilas-boton id="plegar" extraClass="" desactivado=false accion=(action "expandir_codigo") texto="" icono="desplegar"}}
-            {{pilas-menu-desplegable-del-editor tamano=tamano modoVim=modoVim oscuro=oscuro}}
-          </div>
-        </div>
-
-        {{monaco-editor
-            titulo=tituloDelCodigo
-            code=codigo
-            oscuro=oscuro
-            desactivado=(not estado.puede_editar)
-            modoVim=modoVim
-            tamano=tamano
-            cuandoCarga=(action "cuando_termino_de_cargar_monaco_editor")
-            onSave=(action "cuandoGuardaDesdeElEditor")
-            onChange=(action "cuando_cambia_el_codigo")}}
-      </div>
+          panelMaximizado=panelMaximizado
+          maximizar=maximizarEditor
+      }}
 
     </div>
   </section>
-
-  <footer class="h2 tr bt b--light-silver"></footer>
 
 </div>

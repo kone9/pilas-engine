@@ -19,19 +19,20 @@ export default Component.extend({
   bus: service(),
   pilas: null,
   contexto: null,
+  autocompletado: null,
 
   didInsertElement() {
     this.set("historial", []);
 
-    new autoComplete({
-      selector: this.$("#input")[0],
+    this.autocompletado = new autoComplete({
+      selector: this.element.querySelector("#input"),
       minChars: 1,
       source: (termino, suggest) => {
         return this.autocompletar(termino, suggest);
       }
     });
 
-    this.bus.on("cuando_termina_de_iniciar_ejecucion", this, "activar_interprete");
+    this.bus.on(`${this.nombre_del_contexto}:cuando_termina_de_iniciar_ejecucion`, this, "activar_interprete");
 
     this.actualizar_diccionario_de_actores.perform();
     this.log.limpiar();
@@ -39,12 +40,14 @@ export default Component.extend({
 
   activar_interprete(pilas, contexto) {
     this.set("pilas", pilas);
-
     this.set("contexto", contexto);
+
+    this.contexto.eval("pilas = pilasengine");
   },
 
   willDestroyElement() {
-    this.bus.off("cuando_termina_de_iniciar_ejecucion", this, "activar_interprete");
+    this.autocompletado.destroy();
+    this.bus.off(`${this.nombre_del_contexto}:cuando_termina_de_iniciar_ejecucion`, this, "activar_interprete");
   },
 
   autocompletar(termino, success) {
@@ -53,7 +56,7 @@ export default Component.extend({
 
   actualizar_diccionario_de_actores: task(function*() {
     if (ENV.environment === "test") {
-      console.warn("Evitando actualizar el intérprete en modo test.");
+      //console.warn("Evitando actualizar el intérprete en modo test.");
       return null;
     }
 
@@ -61,7 +64,7 @@ export default Component.extend({
       yield timeout(2000);
 
       if (this.contexto) {
-        this.contexto.eval("window.actores = pilas.obtener_diccionario_de_actores();");
+        this.contexto.eval("window.actores = pilasengine.obtener_diccionario_de_actores();");
       }
     }
   }),
@@ -92,12 +95,11 @@ export default Component.extend({
             // TODO: esto debería poder convertir un objeto más complejo o un
             //       diccionario como "actores".
             resultado = JSON.stringify(resultado);
-          } catch(_) {
+          } catch (_) {
             console.warn("No se puede convertir este objeto a json");
           }
 
           this.log.info(resultado);
-
         } catch (error) {
           this.log.error(error);
         }

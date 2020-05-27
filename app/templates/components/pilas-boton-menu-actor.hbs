@@ -1,0 +1,35 @@
+{{yield}}
+<div class="dib relative">
+
+  {{#basic-dropdown as |dd|}}
+    {{#dd.trigger}}
+      <button data-test="boton-menu" class="texto bg-transparent no-outline p0 f7 o-50 pointer glow bn pa0">{{pilas-icono icono="menu"}}</button>
+    {{/dd.trigger}}
+
+    {{#dd.content class="slide-fade bg-fondo ba borde shadow-4 pa2 f7"}}
+
+      <div role="button" class="pa2 texto pointer hover-bg-black-10 f7 truncate" {{action accionClonar}}>
+        {{pilas-icono icono="duplicar" class="v-top"}} Duplicar este actor
+      </div>
+
+      <div role="button" class="pa2 texto pointer hover-bg-black-10 f7 truncate" {{action accionClonarX5}}>
+        {{pilas-icono icono="duplicar" class="v-top"}} Duplicar 5 veces este actor
+      </div>
+
+      {{pilas-boton-eliminar-con-confirmacion
+          comoCelda=true 
+          tipo="actor"
+          titulo="¿Realmente quieres eliminar este actor?"
+          accion=accionEliminar}}
+
+      {{pilas-mover-actor-de-escena
+          escenas=escenas
+          actor_id=actor_id
+          escena_id=escena_id
+          accionCuandoIntentaMoverAEscenaNueva=accionCuandoIntentaMoverAEscenaNueva
+          accionCuandoIntentaMoverAUnaEscena=accionCuandoIntentaMoverAUnaEscena
+        }}
+    {{/dd.content}}
+  {{/basic-dropdown}}
+
+</div>

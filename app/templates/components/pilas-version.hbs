@@ -1,23 +1,35 @@
 {{yield}}
 
 <div class="tc mt4 lato gray">
-  versión {{version_simplificada}}
-</div>
+  <div class="dib w1">
+  </div>
 
-<div class="tc mt2 f7 lato gray">
-  {{#if consultando}}
-    Consultando si existe una versión más reciente en el servidor ...
+  {{#if enDesarrollo}}
+    versión en desarrollo
+    <br>
+    <a class="f7 link gray" href="https://github.com/pilas-engine/pilas-engine/commits/master" target="_blank" rel="noopener">{{version}} (más información)</a>
   {{else}}
+    {{version_simplificada}}
+  {{/if}}
 
-    {{#if error}}
-      <span class="gray">{{error}}</span>
+  <div class="w1 dib pt1">
+
+    {{#if consultando}}
+      {{#pilas-tooltip class="w4" texto="Buscando versiones nuevas ..."}}
+        {{pilas-spinner}}
+      {{/pilas-tooltip}}
     {{else}}
       {{#if actualizada}}
-        Tienes la versión más reciente.
+        {{#pilas-tooltip class="w4" texto="Tienes la versión más nueva de pilas."}}
+          {{pilas-mini-icono icono="actualizada"}}
+        {{/pilas-tooltip}}
       {{else}}
-        <span class="red">Existe una actualización disponible: <a href="https://github.com/pilas-engine/pilas-engine/releases" rel="noopener" target="_blank">{{version_en_el_servidor}}</a></span>
+        {{#pilas-tooltip class="right-1 w4" texto="Hay una versión nueva para descargar desde www.pilas-enginee.com.ar."}}
+          <div class="red dib">
+            {{pilas-mini-icono icono="desactualizada"}}
+          </div>
+        {{/pilas-tooltip}}
       {{/if}}
     {{/if}}
-
-  {{/if}}
+  </div>
 </div>
